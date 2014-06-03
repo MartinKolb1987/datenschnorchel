@@ -1,0 +1,122 @@
+$icon-font-path: "/bower_components/sass-bootstrap/fonts/";
+
+@import 'sass-bootstrap/lib/bootstrap';
+
+// -----------------
+// colors
+// -----------------
+$black: #000000;
+$lightGray: #e8e8e8;
+
+// -----------------
+// margins
+// -----------------
+$buttonMargin: 1vh;
+$containerMargin: 10vh;
+
+// -----------------
+// custom styles
+// -----------------
+
+body{
+	background-color: $lightGray;
+	
+	.svg-img {
+		background-size: 100%;
+		background-repeat: no-repeat;
+	}
+	
+	#navigation {
+		position: absolute;
+		width: 100vw;
+		height: 100vh;
+		top: 0;
+		left: 0;
+	}
+	
+	#navigation-inner {
+		padding-top: $containerMargin;
+		width: 90vw;
+		margin: 0 auto;
+	}
+	
+	#logo {
+		background-image: url('/images/logo.svg');
+		$sizeL: 16vh;
+		$minSizeL: 100px;
+		height: $sizeL;
+		width: $sizeL;
+		min-height: $minSizeL;
+		min-width: $minSizeL;
+	}
+	
+	.circle-button {
+		$sizeB: 8vh;
+		$minSizeB: 50px;
+		height: $sizeB;
+		width: $sizeB;
+		min-height: $minSizeB;
+		min-width: $minSizeB;
+	}
+	
+	#button-twitter-login {
+		background-image: url('/images/twitter.svg');
+		display: inline-block;
+		margin-right: $buttonMargin;
+	}
+	
+	#button-fb-login {
+		background-image: url('/images/facebook.svg');
+	}
+	
+	#button-friends {
+		background-image: url('/images/friends.svg');
+		margin-top: $buttonMargin;
+	}
+	
+	#button-map {
+		background-image: url('/images/map.svg');
+	}
+	
+	#button-help {
+		background-image: url('/images/help.svg');
+		position: absolute;
+		bottom: $containerMargin;
+		right: 5vw;
+	}
+	
+	@media only screen and (min-width: 1200px) {
+		#navigation-inner {
+			width: 70vw;
+		}
+		
+		#button-help {
+			right: 15vw;
+		}
+	}
+
+	#app-content {
+		@media screen and (orientation:portrait) {
+			#map-canvas {
+				$sizeP: 80vw;
+				height: $sizeP;
+				width: $sizeP;
+				border-radius: $sizeP;
+			}
+		}
+		@media screen and (orientation:landscape) {
+			#map-canvas {
+				$sizeL: 80vh;
+				height: $sizeL;
+				width: $sizeL;
+				border-radius: $sizeL;
+			}
+		}
+		#map-canvas {
+			margin: $containerMargin auto 0 auto;
+			padding: 0;
+			border: 1px solid #b1b1b1;
+			box-shadow: 0 0 2em #bbb;
+		}
+	}
+}

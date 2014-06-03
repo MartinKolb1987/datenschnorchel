@@ -1,0 +1,14 @@
+{
+  "name": "fb-app",
+  "version": "0.0.0",
+  "dependencies": {
+    "sass-bootstrap": "~3.0.0",
+    "jquery": "~1.10.2",
+    "requirejs": "~2.1.9",
+    "requirejs-text": "~2.0.10",
+    "requirejs-plugins": "~v1.0.2",
+    "underscore": "~1.5.2",
+    "backbone": "~1.1.0"
+  },
+  "devDependencies": {}
+}
