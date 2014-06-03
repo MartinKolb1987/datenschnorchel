@@ -1,7 +1,7 @@
-creepycrawler
+datenschnorchel
 =============
 
-work in progress - creepy crawler
+work in progress - datenschnorchel
 
 1.) you need npm and bower  
 2.) after cloning repo (be in the root folder of your project)  
