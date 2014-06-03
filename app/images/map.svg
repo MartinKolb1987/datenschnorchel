@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.1"
+   width="60"
+   height="60"
+   viewBox="0 0 60 60"
+   id="Ebene_1"
+   xml:space="preserve"><metadata
+     id="metadata23"><rdf:RDF><cc:Work
+         rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
+     id="defs21" /><g
+     transform="matrix(0.91666667,0,0,0.91666667,2.4999999,2.4999999)"
+     id="g3"><path
+       d="M 30,58 C 14.561,58 2,45.439 2,30 2,14.561 14.561,2 30,2 45.439,2 58,14.561 58,30 58,45.439 45.439,58 30,58 z"
+       id="path5"
+       style="fill:#ffffff" /><g
+       id="g7"><path
+         d="M 30,4 C 44.337,4 56,15.664 56,30 56,44.337 44.337,56 30,56 15.664,56 4,44.337 4,30 4,15.664 15.664,4 30,4 M 30,0 C 13.432,0 0,13.432 0,30 0,46.568 13.432,60 30,60 46.568,60 60,46.568 60,30 60,13.432 46.568,0 30,0 l 0,0 z"
+         id="path9"
+         style="fill:#22445d" /></g></g><g
+     id="g11"
+     style="display:none"><path
+       d="m 40.935,15.166 c -1.104,0 -2,-0.896 -2,-2 V 9.833 c 0,-1.104 0.896,-2 2,-2 h 15 c 1.104,0 2,0.896 2,2 v 3.333 c 0,1.104 -0.896,2 -2,2 h -15 z"
+       id="path13"
+       style="fill:#ffffff;display:inline" /><path
+       d="m 55.935,9.833 v 3.333 h -15 V 9.833 h 15 m 0,-4 h -15 c -2.209,0 -4,1.791 -4,4 v 3.333 c 0,2.209 1.791,4 4,4 h 15 c 2.209,0 4,-1.791 4,-4 V 9.833 c 0,-2.209 -1.791,-4 -4,-4 l 0,0 z"
+       id="path15"
+       style="fill:#8e9cb8;display:inline" /></g><path
+     d="m 38.468752,26.234821 c 0.0027,-0.08482 0.0125,-0.166964 0.0125,-0.252678 0,-4.684822 -3.797321,-8.482143 -8.482143,-8.482143 -4.684822,0 -8.482143,3.797321 -8.482143,8.482143 0,0.10625 0.0125,0.209821 0.01607,0.315178 -0.0018,0.107143 -0.01161,0.191965 -0.01161,0.305358 0,6.765178 8.48125,15.897321 8.48125,15.897321 0,0 8.480357,-9.132143 8.480357,-15.897321 0,-0.136608 -0.01161,-0.240179 -0.01429,-0.367858 z m -8.467857,4.497322 c -2.623215,0 -4.75,-2.126786 -4.75,-4.75 0,-2.623214 2.126785,-4.75 4.75,-4.75 2.623215,0 4.75,2.126786 4.75,4.75 0,2.623214 -2.126785,4.75 -4.75,4.75 z"
+     id="path17"
+     style="fill:#22445d;fill-rule:evenodd" /></svg>
