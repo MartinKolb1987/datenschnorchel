@@ -41,7 +41,7 @@ body{
 	}
 	
 	#logo {
-		background-image: url('/images/logo.svg');
+		background-image: url('../images/logo.svg');
 		$sizeL: 16vh;
 		$minSizeL: 100px;
 		height: $sizeL;
@@ -60,26 +60,26 @@ body{
 	}
 	
 	#button-twitter-login {
-		background-image: url('/images/twitter.svg');
+		background-image: url('../images/twitter.svg');
 		display: inline-block;
 		margin-right: $buttonMargin;
 	}
 	
 	#button-fb-login {
-		background-image: url('/images/facebook.svg');
+		background-image: url('../images/facebook.svg');
 	}
 	
 	#button-friends {
-		background-image: url('/images/friends.svg');
+		background-image: url('../images/friends.svg');
 		margin-top: $buttonMargin;
 	}
 	
 	#button-map {
-		background-image: url('/images/map.svg');
+		background-image: url('../images/map.svg');
 	}
 	
 	#button-help {
-		background-image: url('/images/help.svg');
+		background-image: url('../images/help.svg');
 		position: absolute;
 		bottom: $containerMargin;
 		right: 5vw;
