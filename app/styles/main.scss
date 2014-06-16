@@ -85,8 +85,20 @@ body{
 		right: 5vw;
 	}
 	
-	#friends-table {
+	#friends-table-container {
+		padding-top: $containerMargin;
+		position: absolute;
+	}
+	
+	#friends-table-header {
 		text-align: center;
+		width: 100%;
+	}
+	
+	.friends-entry-image {
+		float: left;
+		height: 10vh;
+		width: 10vh;
 	}
 	
 	@media only screen and (min-width: 1200px) {
@@ -100,20 +112,32 @@ body{
 	}
 
 	#app-content {
+		$sizeP: 80vw;
+		$sizeL: 80vh;
+		$sizeFP: 70vw;
+		$sizeFL: 70vh;
 		@media screen and (orientation:portrait) {
 			.app-content-inner {
-				$sizeP: 80vw;
 				height: $sizeP;
 				width: $sizeP;
 				border-radius: $sizeP;
 			}
+			#friends-table-container {
+				height: $sizeFP;
+				width: $sizeFP;
+				margin-left: 5vw;
+			}
 		}
 		@media screen and (orientation:landscape) {
 			.app-content-inner {
-				$sizeL: 80vh;
 				height: $sizeL;
 				width: $sizeL;
 				border-radius: $sizeL;
+			}
+			#friends-table-container {
+				height: $sizeFL;
+				width: $sizeFL;
+				margin-left: 5vh;
 			}
 		}
 		.app-content-inner {

@@ -35,7 +35,8 @@ require.config({
 require([
     'routers/router',
     'jquery',
-    'backbone'
+    'backbone',
+    'bootstrap'
 ], function (Router, $, Backbone) {
     // ajax settings (sent cors cookies)
     $.ajaxSetup({ xhrFields: { withCredentials: true }, dataType: 'json'});

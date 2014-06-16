@@ -52,8 +52,8 @@ define([
 			// this.initFacebook();
 			// this.loginFacebook();
 
-			this.facebookData = $.parseJSON(MockData);
-			this.parseData();
+			/*this.facebookData = $.parseJSON(MockData);
+			this.parseData();*/
 
 		},
 
