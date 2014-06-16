@@ -4,18 +4,21 @@ define([
     'jquery',
     'backbone',
     '../views/about',
-    '../views/facebook'
-], function ($, Backbone, AboutView, FacebookView) {
+    '../views/facebook',
+	'../views/friends'
+], function ($, Backbone, AboutView, FacebookView, FriendsView) {
     'use strict';
 
     var Router = Backbone.Router.extend({
 
         aboutView: new AboutView(),
         facebookView: new FacebookView(),
+		friendsView: new FriendsView(),
 
         routes: {
             '' : 'about',
             'facebook' : 'facebook',
+			'friends' : 'friends',
 			'*actions': 'defaultAction'
         },
 
@@ -25,6 +28,10 @@ define([
 
         facebook: function(){
             this.facebookView.overview();
+        },
+
+		friends: function(){
+            this.friendsView.overview();
         },
 
         defaultAction: function(){

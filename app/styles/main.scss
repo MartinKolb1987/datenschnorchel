@@ -85,6 +85,10 @@ body{
 		right: 5vw;
 	}
 	
+	#friends-table {
+		text-align: center;
+	}
+	
 	@media only screen and (min-width: 1200px) {
 		#navigation-inner {
 			width: 70vw;
@@ -97,7 +101,7 @@ body{
 
 	#app-content {
 		@media screen and (orientation:portrait) {
-			#map-canvas {
+			.app-content-inner {
 				$sizeP: 80vw;
 				height: $sizeP;
 				width: $sizeP;
@@ -105,14 +109,14 @@ body{
 			}
 		}
 		@media screen and (orientation:landscape) {
-			#map-canvas {
+			.app-content-inner {
 				$sizeL: 80vh;
 				height: $sizeL;
 				width: $sizeL;
 				border-radius: $sizeL;
 			}
 		}
-		#map-canvas {
+		.app-content-inner {
 			margin: $containerMargin auto 0 auto;
 			padding: 0;
 			border: 1px solid #b1b1b1;
