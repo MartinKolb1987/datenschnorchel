@@ -11,6 +11,7 @@ $lightGray: #e8e8e8;
 // -----------------
 // margins
 // -----------------
+
 $buttonMargin: 1vh;
 $containerMargin: 10vh;
 
@@ -85,22 +86,6 @@ body{
 		right: 5vw;
 	}
 	
-	#friends-table-container {
-		padding-top: $containerMargin;
-		position: absolute;
-	}
-	
-	#friends-table-header {
-		text-align: center;
-		width: 100%;
-	}
-	
-	.friends-entry-image {
-		float: left;
-		height: 10vh;
-		width: 10vh;
-	}
-	
 	@media only screen and (min-width: 1200px) {
 		#navigation-inner {
 			width: 70vw;
@@ -112,39 +97,99 @@ body{
 	}
 
 	#app-content {
+		
 		$sizeP: 80vw;
 		$sizeL: 80vh;
-		$sizeFP: 70vw;
-		$sizeFL: 70vh;
+		
 		@media screen and (orientation:portrait) {
+			
 			.app-content-inner {
 				height: $sizeP;
 				width: $sizeP;
 				border-radius: $sizeP;
 			}
+			
+			.friends-entry-container {
+				margin-left: 10vw;
+			}
+			
 			#friends-table-container {
-				height: $sizeFP;
-				width: $sizeFP;
+				height: $sizeP - 10;
+				width: $sizeP - 10;
 				margin-left: 5vw;
 			}
+			
 		}
 		@media screen and (orientation:landscape) {
+			
 			.app-content-inner {
 				height: $sizeL;
 				width: $sizeL;
 				border-radius: $sizeL;
 			}
+			
+			.friends-entry-container {
+				margin-left: 10vh;
+			}
+			
 			#friends-table-container {
-				height: $sizeFL;
-				width: $sizeFL;
+				height: $sizeL - 10;
+				width: $sizeL - 10;
 				margin-left: 5vh;
 			}
 		}
+		
 		.app-content-inner {
 			margin: $containerMargin auto 0 auto;
 			padding: 0;
 			border: 1px solid #b1b1b1;
 			box-shadow: 0 0 2em #bbb;
+		}
+		
+		#friends-table-container {
+			padding-top: $containerMargin;
+			position: absolute;
+		}
+		
+		#friends-table-header {
+			text-align: center;
+			width: 100%;
+			margin-bottom: $containerMargin/2;
+		}
+		
+		.friends-entry-container {
+			width: 50vh;
+		}
+		
+		.friends-entry-image {
+			float: left;
+			height: 10vh;
+			width: 10vh;
+		}
+		
+		.friends-image {
+			height: 10vh;
+			width: 10vh;
+			border-radius: 10vh;
+			background-image: url('../images/mockup/friends-image.svg');
+			background-size: contain;
+			background-repeat: no-repeat;
+			background-position: center center;
+		}
+		
+		.friends-name {
+			display: inline-block;
+			padding-left: $buttonMargin;
+		}
+		
+		.friends-entry-accordion {
+			display: inline-block;
+			width: 35vh;
+			padding-left: $buttonMargin;
+		}
+		
+		.friends-pin-details {
+			margin-top: 3vh;
 		}
 	}
 }
