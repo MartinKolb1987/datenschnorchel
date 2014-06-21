@@ -418,8 +418,28 @@ define([
 
 			}
 
+			// init cluster
 			var markerCluster = new MarkerClusterer(that.map, markers);
+			
+			// set cluster eventlistener
+			this.setClusterEventlistener(markerCluster);
 
+		},
+
+		setClusterEventlistener: function(cluster){
+			google.maps.event.addListener(cluster, 'clusterclick', function(cluster) {
+			    var markers = cluster.getMarkers();
+
+				$.each(markers, function(key, value){
+					console.log(value.markerData);
+				});
+
+			    // var infowindow = new google.maps.InfoWindow();
+			    // infowindow.close();
+			    // infowindow.open(that.map, 'sdfsdf');
+			    // return false;
+
+			});
 		},
 
 		createMarker: function(lat, lng, markerData){
