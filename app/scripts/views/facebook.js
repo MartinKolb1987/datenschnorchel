@@ -359,6 +359,7 @@ define([
 			var hoursEnd = '';
 			var hoursSwitch = '';
 			var markers = [];
+			var markerData = [];
 
 			for(var index in sortedList) {
 
@@ -406,7 +407,7 @@ define([
 			    console.log('--------------------------------------------');
 
 				if(sortedList[index][0].locationLat){
-					markers.push(that.createMarker(sortedList[index][0].locationLat, sortedList[index][0].locationLng));
+					markers.push(that.createMarker(sortedList[index][0].locationLat, sortedList[index][0].locationLng, content));
 					// infowindow.open(that.map, that.createMarker(sortedList[index][0].locationLat, sortedList[index][0].locationLng));
 				} else {
 					// wait until data exists
@@ -423,16 +424,30 @@ define([
 
 		},
 
-		createMarker: function(lat, lng){
+		createMarker: function(lat, lng, data){
 			var that = this;
 			var position = new google.maps.LatLng(lat, lng);
 			var marker = new google.maps.Marker({
 				position: position,
-				map: that.map
+				map: that.map,
+				customInfo: data
 				// icon: ownIcon
 			});
 			that.map.panTo(position);
+
+			// add eventlistener to every single marker
+			this.setMarkerEventlistener(marker);
+
 			return marker;
+		},
+
+		setMarkerEventlistener: function(marker){
+			var that = this;
+			google.maps.event.addListener(marker, 'click', function() {
+				var infowindow = new google.maps.InfoWindow();  
+				infowindow.setContent(this.customInfo);
+				infowindow.open(that.map, this);
+			});
 		}
 
 
