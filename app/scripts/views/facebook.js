@@ -71,7 +71,8 @@ define([
 			var mapCanvas = document.getElementById('map-canvas');
 			var mapOptions = {
 			    zoom: 9,
-			    mapTypeId: google.maps.MapTypeId.ROADMAP
+			    mapTypeId: google.maps.MapTypeId.ROADMAP,
+			    disableDefaultUI: true,
 			};
 			this.map = new google.maps.Map(mapCanvas, mapOptions);
 
@@ -85,6 +86,7 @@ define([
 					}]
 				}
 			]);
+
 		},
 
 		initFacebook: function(){
@@ -419,14 +421,18 @@ define([
 			}
 
 			// init cluster
-			var markerCluster = new MarkerClusterer(that.map, markers);
-			
+			var markerCluster = new MarkerClusterer(that.map, markers, {zoomOnClick: true});
+
 			// set cluster eventlistener
 			this.setClusterEventlistener(markerCluster);
+
+			// set map eventlistener
+			this.setMapEventlistener();
 
 		},
 
 		setClusterEventlistener: function(cluster){
+			var that = this;
 			google.maps.event.addListener(cluster, 'clusterclick', function(cluster) {
 			    var markers = cluster.getMarkers();
 
@@ -434,12 +440,20 @@ define([
 					console.log(value.markerData);
 				});
 
-			    // var infowindow = new google.maps.InfoWindow();
-			    // infowindow.close();
-			    // infowindow.open(that.map, 'sdfsdf');
-			    // return false;
+			    // infowindow.setContent('sdf');
+			    // infowindow.open(that.map, cluster.center_);
+			    var info = new google.maps.MVCObject;
+	            info.set('position', cluster.center_);
+			    var infowindow = new google.maps.InfoWindow();
+	            infowindow.close();
+	            infowindow.setContent('Blubb');
+	            infowindow.open(that.map, info);
 
 			});
+
+			// google.maps.event.addListener(that.map, 'idle', function() { 
+			//   console.log(this.getZoom());
+			// });
 		},
 
 		createMarker: function(lat, lng, markerData){
@@ -475,11 +489,21 @@ define([
 			var content = '<b>' + markerData.countedPosts + ' facebook posts</b><br>';
 			content += 'in den letzten ' + markerData.dayPeriod + ' Tagen zwischen <br>';
 			content += markerData.hoursStart + ' Uhr und ' + markerData.hoursEnd + ' Uhr';
-
+			infowindow.close();
 			infowindow.setContent(content);
 			infowindow.open(that.map, marker);
-		}
+		},
 
+		setMapEventlistener: function(){
+			var that = this;
+			$('#app-content').on('click', '#zoom-plus', function(){
+				that.map.setZoom(that.map.getZoom() + 1);
+			});
+
+			$('#app-content').on('click', '#zoom-minus', function(){
+				that.map.setZoom(that.map.getZoom() - 1);
+			});
+		}
 
     });
 

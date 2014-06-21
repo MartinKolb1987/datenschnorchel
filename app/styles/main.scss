@@ -85,6 +85,18 @@ body{
 		bottom: $containerMargin;
 		right: 5vw;
 	}
+
+	#zoom-wrapper{
+		position: absolute;
+		z-index: 9999;
+		bottom: 10px;
+		left: 50vw;
+		margin-left: -50px;
+		#zoom-plus, #zoom-minus{
+			width: 40px;
+			height: 40px;
+		}
+	}
 	
 	@media only screen and (min-width: 1200px) {
 		#navigation-inner {
