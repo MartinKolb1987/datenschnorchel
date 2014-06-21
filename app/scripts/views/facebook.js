@@ -6,12 +6,13 @@ define([
     'backbone',
     'facebook',
     'async!http://maps.google.com/maps/api/js?sensor=false',
+    'markercluster',
     '../collections/fb_feeds',
     '../models/fb_feed',
     'text!../templates/map/google_map.html',
     'text!../templates/facebook/facebook_item.html',
     'text!../api/db_sarah_20140514_ALLES.json'
-], function ($, _, Backbone, FB, GMaps, Collection, Model, MapTemplate, FacebookItemTemplate, MockData) {
+], function ($, _, Backbone, FB, GMaps, Markercluster, Collection, Model, MapTemplate, FacebookItemTemplate, MockData) {
     'use strict';
 
     var AppView = Backbone.View.extend({
@@ -21,7 +22,7 @@ define([
 		facebookData: [],
 		facebookDataParsed: [],
 		facebookDataSorted: [],
-		minimumNumberOfSameEntries: -1, // -1 = never mind
+		minimumNumberOfSameEntries: 2, // -1 = never mind
 		map: '',
 
 		// -------------------------------
@@ -54,11 +55,12 @@ define([
 			this.initMap();
 
 			// init facebook & show login if needed
-			// this.initFacebook();
-			// this.loginFacebook();
-
-			this.facebookData = $.parseJSON(MockData);
-			this.parseData();
+			this.initFacebook();
+			this.loginFacebook();
+			// this.facebookData = '';
+			// this.facebookDataSorted = '';
+			// this.facebookData = $.parseJSON(MockData);
+			// this.parseData();
 
 		},
 
@@ -137,6 +139,7 @@ define([
 		// get and parse data 
 		// -------------------------------
 		fetchData: function() {
+			this.collection = '';
 			this.collection = new Collection();
 			var that = this;
 			that.facebookData = [];
@@ -215,6 +218,7 @@ define([
 			var that = this;
 			var outerArr = [];
 			var innerArr = [];
+			that.facebookDataSorted = '';
 
 			$.when(that.sortAllDataByStreet()).then(function(){
 
@@ -228,17 +232,30 @@ define([
 					} else {
 						// unique key name
 						var ownKey = that.cleanAddress(that.cleanStreet(value.locationStreet) + '-' + value.locationCity);
+						// var ownKey = that.cleanAddress(value.locationCity);
 						outerArr[ownKey] = innerArr;
 						innerArr.push(value);
 					}
 				});
 
 				that.facebookDataSorted = outerArr;
-
 				that.setMarker();
+				// that.sortAllDataByCity(outerArr);
 			
 			});
 
+
+		},
+
+		sortAllDataByCity: function(blubb){
+			var that = this;
+			var cityKey = '';
+			console.log(blubb);
+			$.each(blubb, function(key, value){
+				console.log(key, value);
+				// cityKey = key.split('-');
+				// console.log(cityKey[cityKey.length-1]);
+			});
 		},
 
 		sortAllDataByStreet: function(){
@@ -298,7 +315,7 @@ define([
 		},
 
 		cleanAddress: function(address){
-			address = address.replace(' ', '-').replace(',', '-').replace('.', '-').toLowerCase();
+			address = address.replace(' ', '_').replace(',', '_').replace('.', '_').toLowerCase();
 			return address;
 		},
 
@@ -341,6 +358,7 @@ define([
 			var hoursStart = '';
 			var hoursEnd = '';
 			var hoursSwitch = '';
+			var markers = [];
 
 			for(var index in sortedList) {
 
@@ -374,12 +392,11 @@ define([
 				infowindow = new google.maps.InfoWindow();
 				infowindow.setContent(that.cleanStreet(sortedList[index][0].locationStreet) + ', ' + sortedList[index][0].locationCity + '<br><br>' + content);
 
-
 				// check if the minimum number of significance data is reached
 				if(this.minimumNumberOfSameEntries === -1){
-					console.log('never mind, print all data on the map');
+					// console.log('never mind, print all data on the map');
 				} else if(this.minimumNumberOfSameEntries <= sortedList[index].length){
-					console.log('minimum number of entries reached, print it on the map: ' + this.minimumNumberOfSameEntries);
+					// console.log('minimum number of entries reached, print it on the map: ' + this.minimumNumberOfSameEntries);
 				} else {
 					console.log('too little data, don´t print it on the map');
 					content = '';
@@ -389,18 +406,20 @@ define([
 			    console.log('--------------------------------------------');
 
 				if(sortedList[index][0].locationLat){
-					infowindow.open(that.map, that.createMarker(sortedList[index][0].locationLat, sortedList[index][0].locationLng));
+					markers.push(that.createMarker(sortedList[index][0].locationLat, sortedList[index][0].locationLng));
+					// infowindow.open(that.map, that.createMarker(sortedList[index][0].locationLat, sortedList[index][0].locationLng));
 				} else {
 					// wait until data exists
 					$.when(that.getLatLng(sortedList[index][0].locationZip + ' ' + sortedList[index][0].locationCity + ' , ' + sortedList[index][0].locationStreet)).then(function(response){
-						console.log(response);
-						infowindow.open(that.map, that.createMarker(response[0].k, response[0].A));
+						markers.push(that.createMarker(response[0].k, response[0].A));
 					});
 				}
 
 				content = '';
 
 			}
+
+			var markerCluster = new MarkerClusterer(that.map, markers);
 
 		},
 

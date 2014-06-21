@@ -28,6 +28,7 @@ require.config({
         text: '../bower_components/requirejs-text/text',
         bootstrap: 'vendor/bootstrap',
         facebook: '//connect.facebook.net/en_US/all',
+        markercluster: 'vendor/markercluster',
         async: '../bower_components/requirejs-plugins/src/async'
     }
 });
