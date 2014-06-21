@@ -359,7 +359,7 @@ define([
 			var hoursEnd = '';
 			var hoursSwitch = '';
 			var markers = [];
-			var markerData = [];
+			var markerData = {};
 
 			for(var index in sortedList) {
 
@@ -374,7 +374,7 @@ define([
 			    
 			    // sort subset array by hours
 			    that.sortSubSetArray(sortedList, index, 'createdHour');
-			    hoursStart =  new Date(sortedList[index][0].created).getHours();
+			    hoursStart = new Date(sortedList[index][0].created).getHours();
 				hoursEnd = new Date(sortedList[index][sortedList[index].length - 1].created).getHours();
 			    
 			    // switch if start and end point not in the right order
@@ -385,13 +385,12 @@ define([
 			    	hoursEnd = hoursSwitch;
 			    }
 
-			    content = '<b>' + sortedList[index].length + ' facebook posts</b><br>';
-			    content += 'in den letzten ' + dayPeriod + ' Tagen zwischen <br>';
-			    content += hoursStart + ' Uhr und ' + hoursEnd + ' Uhr';
-				
-				// google info window
-				infowindow = new google.maps.InfoWindow();
-				infowindow.setContent(that.cleanStreet(sortedList[index][0].locationStreet) + ', ' + sortedList[index][0].locationCity + '<br><br>' + content);
+			    // prepare data for markerData
+			    markerData = {};
+			    markerData['countedPosts'] = sortedList[index].length;
+			    markerData['dayPeriod'] = dayPeriod;
+			    markerData['hoursStart'] = hoursStart;
+			    markerData['hoursEnd'] = hoursEnd;
 
 				// check if the minimum number of significance data is reached
 				if(this.minimumNumberOfSameEntries === -1){
@@ -407,12 +406,11 @@ define([
 			    console.log('--------------------------------------------');
 
 				if(sortedList[index][0].locationLat){
-					markers.push(that.createMarker(sortedList[index][0].locationLat, sortedList[index][0].locationLng, content));
-					// infowindow.open(that.map, that.createMarker(sortedList[index][0].locationLat, sortedList[index][0].locationLng));
+					markers.push(that.createMarker(sortedList[index][0].locationLat, sortedList[index][0].locationLng, markerData));
 				} else {
 					// wait until data exists
 					$.when(that.getLatLng(sortedList[index][0].locationZip + ' ' + sortedList[index][0].locationCity + ' , ' + sortedList[index][0].locationStreet)).then(function(response){
-						markers.push(that.createMarker(response[0].k, response[0].A));
+						markers.push(that.createMarker(response[0].k, response[0].A, markerData));
 					});
 				}
 
@@ -424,13 +422,13 @@ define([
 
 		},
 
-		createMarker: function(lat, lng, data){
+		createMarker: function(lat, lng, markerData){
 			var that = this;
 			var position = new google.maps.LatLng(lat, lng);
 			var marker = new google.maps.Marker({
 				position: position,
 				map: that.map,
-				customInfo: data
+				markerData: markerData,
 				// icon: ownIcon
 			});
 			that.map.panTo(position);
@@ -444,10 +442,22 @@ define([
 		setMarkerEventlistener: function(marker){
 			var that = this;
 			google.maps.event.addListener(marker, 'click', function() {
-				var infowindow = new google.maps.InfoWindow();  
-				infowindow.setContent(this.customInfo);
-				infowindow.open(that.map, this);
+				that.displayInfoWindow(this.markerData, this);
 			});
+		},
+
+		displayInfoWindow: function(markerData, marker){
+			console.log(markerData);
+			var that = this;
+			var infowindow = new google.maps.InfoWindow();
+			
+			// content
+			var content = '<b>' + markerData.countedPosts + ' facebook posts</b><br>';
+			content += 'in den letzten ' + markerData.dayPeriod + ' Tagen zwischen <br>';
+			content += markerData.hoursStart + ' Uhr und ' + markerData.hoursEnd + ' Uhr';
+
+			infowindow.setContent(content);
+			infowindow.open(that.map, marker);
 		}
 
 
