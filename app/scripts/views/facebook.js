@@ -24,6 +24,8 @@ define([
 		facebookDataSorted: [],
 		minimumNumberOfSameEntries: 2, // -1 = never mind
 		map: '',
+		infowindow: '',
+		changedZoomLevel: 0,
 
 		// -------------------------------
 		// delegate events
@@ -317,7 +319,7 @@ define([
 		},
 
 		cleanAddress: function(address){
-			address = address.replace(' ', '_').replace(',', '_').replace('.', '_').toLowerCase();
+			address = address.replace(' ', '-').replace(',', '-').replace('.', '-').toLowerCase();
 			return address;
 		},
 
@@ -353,7 +355,6 @@ define([
 
 		setMarker: function(){
 			var that = this;
-			var infowindow = '';
 			var content = '';
 			var sortedList = that.facebookDataSorted;
 			var dayPeriod = '';
@@ -393,6 +394,8 @@ define([
 			    markerData['dayPeriod'] = dayPeriod;
 			    markerData['hoursStart'] = hoursStart;
 			    markerData['hoursEnd'] = hoursEnd;
+			    markerData['street'] = this.cleanStreet(sortedList[index][0].locationStreet);
+			    markerData['locationCity'] = sortedList[index][0].locationCity;
 
 				// check if the minimum number of significance data is reached
 				if(this.minimumNumberOfSameEntries === -1){
@@ -421,7 +424,7 @@ define([
 			}
 
 			// init cluster
-			var markerCluster = new MarkerClusterer(that.map, markers, {zoomOnClick: true});
+			var markerCluster = new MarkerClusterer(that.map, markers, {zoomOnClick: false});
 
 			// set cluster eventlistener
 			this.setClusterEventlistener(markerCluster);
@@ -433,27 +436,49 @@ define([
 
 		setClusterEventlistener: function(cluster){
 			var that = this;
+
 			google.maps.event.addListener(cluster, 'clusterclick', function(cluster) {
 			    var markers = cluster.getMarkers();
-
+			    var content = '';
+				
 				$.each(markers, function(key, value){
 					console.log(value.markerData);
+					content += 'Anzahl Posts: ' + value.markerData.countedPosts + '<br/>';
+					content += 'Anzahl Tage: ' + value.markerData.dayPeriod + '<br/>';
+					content += 'Uhrzeit Start: ' + value.markerData.hoursStart + '<br/>';
+					content += 'Uhrzeit Ende: ' + value.markerData.hoursEnd + '<br/>';
+					content += 'Strasse: ' + value.markerData.street + '<br/>';
+					content += '----------------------------------------<br/>';
 				});
 
-			    // infowindow.setContent('sdf');
-			    // infowindow.open(that.map, cluster.center_);
-			    var info = new google.maps.MVCObject;
-	            info.set('position', cluster.center_);
-			    var infowindow = new google.maps.InfoWindow();
-	            infowindow.close();
-	            infowindow.setContent('Blubb');
-	            infowindow.open(that.map, info);
+				// close info window
+				if(that.infowindow){
+					that.infowindow.close();
+				}
+				
+				// info window
+				var center = cluster.getCenter();
+				var size = cluster.getSize();
+				that.infowindow = new google.maps.InfoWindow();
+				that.infowindow.setContent(content);
+				that.infowindow.setPosition(center);
+				that.infowindow.open(that.map); 
 
 			});
 
-			// google.maps.event.addListener(that.map, 'idle', function() { 
-			//   console.log(this.getZoom());
-			// });
+			// check if zoom level change --> close all infow windows
+			google.maps.event.addListener(that.map, 'idle', function() { 
+				if(that.changedZoomLevel != this.getZoom()){
+
+					// close info window
+					if(that.infowindow){
+						that.infowindow.close();
+					}
+
+					that.changedZoomLevel = this.getZoom();
+				}
+			});
+
 		},
 
 		createMarker: function(lat, lng, markerData){
@@ -481,17 +506,23 @@ define([
 		},
 
 		displayInfoWindow: function(markerData, marker){
-			console.log(markerData);
 			var that = this;
-			var infowindow = new google.maps.InfoWindow();
 			
 			// content
 			var content = '<b>' + markerData.countedPosts + ' facebook posts</b><br>';
 			content += 'in den letzten ' + markerData.dayPeriod + ' Tagen zwischen <br>';
 			content += markerData.hoursStart + ' Uhr und ' + markerData.hoursEnd + ' Uhr';
-			infowindow.close();
-			infowindow.setContent(content);
-			infowindow.open(that.map, marker);
+			
+			// close info window
+			if(that.infowindow){
+				that.infowindow.close();
+			}
+			
+			// info window
+			this.infowindow = new google.maps.InfoWindow();
+			this.infowindow.close();
+			this.infowindow.setContent(content);
+			this.infowindow.open(that.map, marker);
 		},
 
 		setMapEventlistener: function(){
