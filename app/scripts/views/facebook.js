@@ -443,7 +443,7 @@ define([
 				
 				$.each(markers, function(key, value){
 					console.log(value.markerData);
-					content += 'Anzahl Posts: ' + value.markerData.countedPosts + '<br/>';
+					content += '<b>Anzahl Posts: ' + value.markerData.countedPosts + '</b><br/>';
 					content += 'Anzahl Tage: ' + value.markerData.dayPeriod + '<br/>';
 					content += 'Uhrzeit Start: ' + value.markerData.hoursStart + '<br/>';
 					content += 'Uhrzeit Ende: ' + value.markerData.hoursEnd + '<br/>';
