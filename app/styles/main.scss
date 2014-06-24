@@ -120,6 +120,7 @@ body{
 			padding: 10px;
 			font-size: 11px;
 			color: #373737;
+			height: inherit;
 
 			h1{
 				font-size: 12px;
@@ -132,6 +133,18 @@ body{
 				padding: 0;
 				margin: 0 0 10px;
 				font-style: italic;
+			}
+			#social-content, #social-icon{
+				float:left;
+				display: inline-block;
+			}
+
+			#social-icon{
+				width: 30px; 
+				height: 30px;
+				background-image: url('../images/facebook.svg');
+				background-size: 30px;
+				margin-right: 5px;
 			}
 		}
 	}

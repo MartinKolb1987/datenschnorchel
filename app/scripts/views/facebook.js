@@ -544,9 +544,12 @@ define([
             content += '<div id="marker-infowindow-inner">';
             content += '<h1>' + headline + '</h1>';
             content += '<h2>' + markerData.street + ', ' + markerData.locationCity + '</h2>';
+            content += '<div id="social-icon"></div>';
+            content += '<div id="social-content">';
             content += '<b>' + markerData.countedPosts + ' facebook posts</b><br>';
             content += 'in den letzten ' + markerData.dayPeriod + ' Tagen zwischen <br>';
             content += markerData.hoursStart + ' Uhr und ' + markerData.hoursEnd + ' Uhr';
+            content += '</div>';
             content += '</div>'
             content += '</div>';
             
