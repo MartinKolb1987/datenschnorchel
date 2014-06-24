@@ -97,6 +97,44 @@ body{
 			height: 30px;
 		}
 	}
+
+	#marker-infowindow{
+		height: 100px;
+		padding: 10px;
+		position: relative;
+		
+		#triangle{
+			display: none;
+			width: 0;
+			height: 0;
+			border-left: 15px solid transparent;
+			border-right: 0 solid transparent;
+			border-bottom: 15px solid white;
+			float: left;
+			transform: rotate(-90deg);
+		}
+
+		#marker-infowindow-inner{
+			background: white;
+			box-shadow: 0 0 2em #bbb;
+			padding: 10px;
+			font-size: 11px;
+			color: #373737;
+
+			h1{
+				font-size: 12px;
+				text-transform: uppercase;
+				padding: 0;
+				margin: 0;
+			}
+			h2{
+				font-size: 12px;
+				padding: 0;
+				margin: 0 0 10px;
+				font-style: italic;
+			}
+		}
+	}
 	
 	@media only screen and (min-width: 1200px) {
 		#navigation-inner {
