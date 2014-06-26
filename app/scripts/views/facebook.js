@@ -526,11 +526,15 @@ define([
                  }
             });
 
-            // google.maps.event.addListener(marker, 'mouseout', function() {
-            //  if(that.infowindow){
-            //      that.infowindow.close();
-            //  }
+            // change icons on mouseover & mouseout
+            // google.maps.event.addListener(marker, 'mouseover', function(e) {
+            //     marker.setIcon(new google.maps.MarkerImage('images/' + this.markerData.type + '_active.svg', null, null, null, new google.maps.Size(40,40)));
             // });
+
+            // google.maps.event.addListener(marker, 'mouseout', function(e) {
+            //     marker.setIcon(new google.maps.MarkerImage('images/' + this.markerData.type + '.svg', null, null, null, new google.maps.Size(40,40)));
+            // });
+
         },
 
         displayInfoWindow: function(markerData, marker){
