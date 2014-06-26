@@ -15,16 +15,22 @@ define([
     'use strict';
 
     var AppView = Backbone.View.extend({
+        // default
         el: 'body',
         appContent: $('#app-content'),
         collection: {},
+        
+        // facebook
         facebookData: [],
         facebookDataParsed: [],
         facebookDataSorted: [],
         minimumNumberOfSameEntries: 2, // -1 = never mind
+        
+        // gmap
         map: '',
         infowindow: '',
         changedZoomLevel: 0,
+        allMarkers: [],
 
         // -------------------------------
         // delegate events
@@ -243,7 +249,6 @@ define([
 
                 that.facebookDataSorted = outerArr;
                 that.setMarker();
-                // that.sortAllDataByCity(outerArr);
             
             });
 
@@ -465,7 +470,7 @@ define([
 
             // });
 
-            // check if zoom level change --> close all infow windows
+            // check if zoom level change --> close all info windows
             google.maps.event.addListener(that.map, 'idle', function() { 
                 if(that.changedZoomLevel != this.getZoom()){
 
@@ -503,7 +508,13 @@ define([
                 markerData: markerData,
                 icon: markerIcon
             });
-            that.map.panTo(position);
+
+            // add marker to map
+            this.map.panTo(position);
+
+            // add all marker to array
+            // needed for shown or not shown
+            this.allMarkers.push(marker);
 
             // add eventlistener to every single marker
             this.setMarkerEventlistener(marker);
@@ -601,6 +612,23 @@ define([
             $('#app-content').on('click', '#zoom-minus', function(){
                 that.map.setZoom(that.map.getZoom() - 1);
             });
+
+            // detect if map dragged
+            google.maps.event.addListener(that.map, 'dragend', function() { 
+                 
+                console.log(that.allMarkers);
+                
+                // get all visible markers
+                for (var i = 0; i<that.allMarkers.length; i++){
+
+                    if(that.map.getBounds().contains(that.allMarkers[i].getPosition()) ){
+                        console.log(this);
+                    }
+                    
+                }
+
+            });
+
         }
 
     });
