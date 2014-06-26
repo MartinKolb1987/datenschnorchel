@@ -615,16 +615,22 @@ define([
 
             // detect if map dragged
             google.maps.event.addListener(that.map, 'dragend', function() { 
-                 
                 console.log(that.allMarkers);
                 
+                // TODO
+                // - berechne lat long aller sichtbaren Marker
+                // - durchlaufe alle nicht sichtbaren Marker und berechne den Winkel zu diesen 
+                // - setze den Winkel für alle Icons am Rand
+
                 // get all visible markers
                 for (var i = 0; i<that.allMarkers.length; i++){
 
                     if(that.map.getBounds().contains(that.allMarkers[i].getPosition()) ){
-                        console.log(this);
+                        console.log('visible -', this);
+                    } else {
+                        console.log('invisible -', this);
                     }
-                    
+
                 }
 
             });
