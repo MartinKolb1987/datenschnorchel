@@ -514,8 +514,16 @@ define([
         setMarkerEventlistener: function(marker){
             var that = this;
 
+            // open infowindow
             google.maps.event.addListener(marker, 'click', function(e) {
                 that.displayInfoWindow(this.markerData, this);
+            });
+
+            // close infowindow
+            $('#app-content').on('click', '#close-infowindow', function(){
+                 if(that.infowindow){
+                     that.infowindow.close();
+                 }
             });
 
             // google.maps.event.addListener(marker, 'mouseout', function() {
@@ -540,8 +548,9 @@ define([
 
             // content
             var content = '<div id="marker-infowindow">';
-            content += '<div id="triangle"></div>';
             content += '<div id="marker-infowindow-inner">';
+            content += '<div id="close-infowindow">x</div>';
+            content += '<div id="triangle"></div>';
             content += '<h1>' + headline + '</h1>';
             content += '<h2>' + markerData.street + ', ' + markerData.locationCity + '</h2>';
             content += '<div id="social-icon"></div>';
@@ -561,17 +570,17 @@ define([
             // set info window settings
             var myOptions = {
                 content: content,
-                pixelOffset: new google.maps.Size(20, -30),
+                pixelOffset: new google.maps.Size(40, -20),
                 zIndex: null,
                 boxStyle: { 
                     opacity: 0.95,
                     width: '250px',
                 },
                 closeBoxMargin: '5px',
-                closeBoxURL: '',
                 infoBoxClearance: new google.maps.Size(1, 1),
                 isHidden: false,
-                pane: "floatPane"
+                pane: "floatPane",
+                enableEventPropagation: true
             };
 
             this.infowindow = new InfoBox(myOptions);

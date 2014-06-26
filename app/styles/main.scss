@@ -102,25 +102,40 @@ body{
 		height: 100px;
 		padding: 10px;
 		position: relative;
+		background: #000;
+		padding: 0;
 		
-		#triangle{
-			display: none;
-			width: 0;
-			height: 0;
-			border-left: 15px solid transparent;
-			border-right: 0 solid transparent;
-			border-bottom: 15px solid white;
-			float: left;
-			transform: rotate(-90deg);
-		}
 
 		#marker-infowindow-inner{
+			position: relative;
 			background: white;
 			box-shadow: 0 0 2em #bbb;
 			padding: 10px;
 			font-size: 11px;
 			color: #373737;
-			height: inherit;
+			height: 105px;
+			
+			#triangle{
+				border-left: 15px solid transparent;
+				border-right: 0 solid transparent;
+				border-bottom: 15px solid white;
+				transform: rotate(-90deg);
+				position: absolute;
+				top: 1px;
+				left: -14px;
+			}
+
+			#close-infowindow{
+				position: absolute;
+				right: 0;
+				top: 0;
+				width: 15px;
+				height: 15px;
+				background: gray;
+				color: white;
+				text-align: center;
+				cursor: pointer;
+			}
 
 			h1{
 				font-size: 12px;
