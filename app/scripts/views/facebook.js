@@ -618,9 +618,14 @@ define([
                 console.log(that.allMarkers);
                 
                 // TODO
+                // - sichtbarer center lat/lng
                 // - berechne lat long aller sichtbaren Marker
                 // - durchlaufe alle nicht sichtbaren Marker und berechne den Winkel zu diesen 
                 // - setze den Winkel für alle Icons am Rand
+
+                var centerPosition = that.map.getBounds().getCenter();
+                var markerPosition = '';
+                var angularDegree = '';
 
                 // get all visible markers
                 for (var i = 0; i<that.allMarkers.length; i++){
@@ -628,10 +633,14 @@ define([
                     if(that.map.getBounds().contains(that.allMarkers[i].getPosition()) ){
                         console.log('visible -', this);
                     } else {
-                        console.log('invisible -', this);
+                        markerPosition = that.allMarkers[i].getPosition();
+                        angularDegree = google.maps.geometry.spherical.computeHeading(centerPosition, markerPosition);
+                        console.log('invisible -');
+                        console.log('Angular degree: ' + angularDegree);
                     }
 
                 }
+
 
             });
 
