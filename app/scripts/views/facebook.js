@@ -370,9 +370,9 @@ define([
 
             for(var index in sortedList) {
 
-                console.log('--------------------------------------------');
-                console.log('KEY: ' + index);
-                console.log(sortedList[index]);
+                // console.log('--------------------------------------------');
+                // console.log('KEY: ' + index);
+                // console.log(sortedList[index]);
 
                 // sort subset array by days
                 that.sortSubSetArray(sortedList, index, 'created');
@@ -412,7 +412,7 @@ define([
                     continue;
                 }
 
-                console.log('--------------------------------------------');
+                // console.log('--------------------------------------------');
 
                 if(sortedList[index][0].locationLat){
                     markers.push(that.createMarker(sortedList[index][0].locationLat, sortedList[index][0].locationLng, markerData));
@@ -435,6 +435,9 @@ define([
 
             // set map eventlistener
             this.setMapEventlistener();
+
+            // render direction icons
+            this.renderDirectionIcons();
 
         },
 
@@ -605,46 +608,102 @@ define([
 
         setMapEventlistener: function(){
             var that = this;
+
             $('#app-content').on('click', '#zoom-plus', function(){
                 that.map.setZoom(that.map.getZoom() + 1);
+                that.renderDirectionIcons();
             });
 
             $('#app-content').on('click', '#zoom-minus', function(){
                 that.map.setZoom(that.map.getZoom() - 1);
+                that.renderDirectionIcons();
             });
 
             // detect if map dragged
             google.maps.event.addListener(that.map, 'dragend', function() { 
-                console.log(that.allMarkers);
-                
-                // TODO
-                // - sichtbarer center lat/lng
-                // - berechne lat long aller sichtbaren Marker
-                // - durchlaufe alle nicht sichtbaren Marker und berechne den Winkel zu diesen 
-                // - setze den Winkel für alle Icons am Rand
+                that.renderDirectionIcons();
+            });
 
-                var centerPosition = that.map.getBounds().getCenter();
-                var markerPosition = '';
-                var angularDegree = '';
+            // window is resized
+            $(window).resize(function() {
+                that.renderDirectionIcons();
+            });
 
-                // get all visible markers
-                for (var i = 0; i<that.allMarkers.length; i++){
+        },
 
-                    if(that.map.getBounds().contains(that.allMarkers[i].getPosition()) ){
-                        console.log('visible -', this);
-                    } else {
-                        markerPosition = that.allMarkers[i].getPosition();
-                        angularDegree = google.maps.geometry.spherical.computeHeading(centerPosition, markerPosition);
-                        console.log('invisible -');
-                        console.log('Angular degree: ' + angularDegree);
-                    }
+        renderDirectionIcons: function(){
+            var that = this;
+            
+            var centerPosition = that.map.getBounds().getCenter();
+            var iconPositions = '';
+            var mapCanvas = $('#map-canvas');
+
+
+            $('.icon-direction-marker').remove();
+
+            // get all visible markers
+            for(var i = 0; i<that.allMarkers.length; i++){
+
+                if(!that.map.getBounds().contains(that.allMarkers[i].getPosition())){
+                    
+                    iconPositions = this.calculateDrawingPoints(that.allMarkers[i].getPosition());
+                    // add direction icon marker
+                    mapCanvas.after('<div class="icon-direction-marker" data-icon-direction="' + i + '" style="top: ' + iconPositions[1] + 'px; left: ' + iconPositions[0] + 'px;"></div>');
 
                 }
 
+            }
 
-            });
+        },
 
+        calculateDrawingPoints: function(markerPosition){
+            var that = this;
+            var centerPosition = that.map.getBounds().getCenter();
+            var heading = '';
+            var angularDegree = '';
+            var normalizedHeading = '';
+            var mapCanvas = $('#map-canvas');
+            var offset = mapCanvas.offset();
+            var width = mapCanvas.width();
+            var height = mapCanvas.height();
+            var centerX = offset.left + width / 2;
+            var centerY = offset.top + height / 2;
+            var x = '';
+            var y = '';
+
+            // 
+            heading = google.maps.geometry.spherical.computeHeading(centerPosition, markerPosition);
+            normalizedHeading = this.normalizeHeading(heading)
+            angularDegree = this.convertHeadingToAngle(normalizedHeading);
+            
+            // get x and y coordinate of the icon marker
+            // to show the direction
+            var offsetBorder = -40;
+            var radius = (mapCanvas.width() - offsetBorder) / 2;
+            x = Math.cos(angularDegree)* radius + centerX; 
+            y = Math.sin(angularDegree)* radius + centerY; 
+
+            return [x, y];
+        },
+
+        normalizeHeading: function(heading){
+            // heading into the range between 0 and 360
+            if(heading > 360){
+                heading -= 360;
+            } else if (heading < 0){
+                heading += 360;
+            }
+            return heading;
+        },
+
+        convertHeadingToAngle: function(heading){
+            return this.convertToRadians(90 - heading) * -1;
+        },
+
+        convertToRadians: function(angle){
+            return angle * Math.PI / 180;
         }
+
 
     });
 

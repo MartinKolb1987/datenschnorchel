@@ -98,6 +98,16 @@ body{
 		}
 	}
 
+	.icon-direction-marker{
+		// display: none;
+		width: 15px;
+		height: 15px;
+		background: blue;
+		position: absolute;
+		z-index: 9999;
+		border-radius: 15px;
+	}
+
 	#marker-infowindow{
 		height: 100px;
 		padding: 10px;
