@@ -623,9 +623,6 @@ define([
             var mapCanvas = $('#map-canvas');
             var icon = '';
 
-            // remove all direction marker
-            // $('.icon-direction-marker').remove();
-
             // get all visible markers
             for(var i = 0; i<that.allMarkers.length; i++){
 
@@ -636,11 +633,12 @@ define([
                     // get coordinations (x,y) for the drawing points
                     iconPositions = this.calculateDrawingPoints(that.allMarkers[i].getPosition());
                     
-                    var exists = $('.icon-direction-marker[data-icon-direction-index="' + i + '"]');
+                    // it´s faster than rendering all direction icons again
+                    var iconDirection = $('.icon-direction-marker[data-icon-direction-index="' + i + '"]');
 
                     // add direction icon marker
-                    if(exists.length !== 0){
-                        exists.show().attr('style', 'top: ' + (iconPositions[1] - 12.5 )+ 'px; left: ' + (iconPositions[0] - 12.5 ) + 'px;');
+                    if(iconDirection.length !== 0){
+                        iconDirection.show().attr('style', 'top: ' + (iconPositions[1] - 12.5 )+ 'px; left: ' + (iconPositions[0] - 12.5 ) + 'px;');
                     } else {
                         mapCanvas.after('<div class="icon-direction-marker ' + icon['direction'] + '" data-icon-direction-index="' + i + '" style="top: ' + (iconPositions[1] - 12.5 )+ 'px; left: ' + (iconPositions[0] - 12.5 ) + 'px;"></div>');
                     }
