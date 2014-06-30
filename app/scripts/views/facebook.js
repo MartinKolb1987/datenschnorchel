@@ -594,6 +594,14 @@ define([
                 that.renderDirectionIcons();
             });
 
+            // detect if map zoomed
+            google.maps.event.addListener(that.map, 'zoom_changed', function() {
+                if (that.changedZoomLevel != that.map.getZoom()) {
+                    that.renderDirectionIcons();
+                    that.changedZoomLevel = that.map.getZoom();
+                }
+            });
+
             // window is resized
             $(window).resize(function() {
                 that.renderDirectionIcons();
