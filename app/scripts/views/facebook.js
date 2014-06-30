@@ -77,7 +77,7 @@ define([
         initMap: function(){
             var mapCanvas = document.getElementById('map-canvas');
             var mapOptions = {
-                zoom: 9,
+                zoom: 11,
                 mapTypeId: google.maps.MapTypeId.ROADMAP,
                 disableDefaultUI: true,
             };
@@ -558,7 +558,7 @@ define([
 
         setMapEventlistener: function(){
             var that = this;
-
+            var interval = '';
             $('#app-content').on('click', '#zoom-plus', function(){
                 that.map.setZoom(that.map.getZoom() + 1);
                 that.renderDirectionIcons();
@@ -570,8 +570,16 @@ define([
             });
 
             // detect if map dragged
+            google.maps.event.addListener(that.map, 'dragstart', function() { 
+                interval = setInterval(function(){
+                    that.renderDirectionIcons();
+                }, 200);
+            });
+
+            // detect if map dragged
             google.maps.event.addListener(that.map, 'dragend', function() { 
                 that.renderDirectionIcons();
+                clearInterval(interval);
             });
 
             // detect if map zoomed
@@ -616,7 +624,7 @@ define([
             var icon = '';
 
             // remove all direction marker
-            $('.icon-direction-marker').remove();
+            // $('.icon-direction-marker').remove();
 
             // get all visible markers
             for(var i = 0; i<that.allMarkers.length; i++){
@@ -628,9 +636,17 @@ define([
                     // get coordinations (x,y) for the drawing points
                     iconPositions = this.calculateDrawingPoints(that.allMarkers[i].getPosition());
                     
-                    // add direction icon marker
-                    mapCanvas.after('<div class="icon-direction-marker ' + icon['direction'] + '" data-icon-direction-index="' + i + '" style="top: ' + (iconPositions[1] - 12.5 )+ 'px; left: ' + (iconPositions[0] - 12.5 ) + 'px;"></div>');
+                    var exists = $('.icon-direction-marker[data-icon-direction-index="' + i + '"]');
 
+                    // add direction icon marker
+                    if(exists.length !== 0){
+                        exists.show().attr('style', 'top: ' + (iconPositions[1] - 12.5 )+ 'px; left: ' + (iconPositions[0] - 12.5 ) + 'px;');
+                    } else {
+                        mapCanvas.after('<div class="icon-direction-marker ' + icon['direction'] + '" data-icon-direction-index="' + i + '" style="top: ' + (iconPositions[1] - 12.5 )+ 'px; left: ' + (iconPositions[0] - 12.5 ) + 'px;"></div>');
+                    }
+
+                } else {
+                    $('.icon-direction-marker[data-icon-direction-index="' + i + '"]').hide();
                 }
 
             }
@@ -657,10 +673,11 @@ define([
             normalizedHeading = this.normalizeHeading(heading)
             angularDegree = this.convertHeadingToAngle(normalizedHeading);
             
-            // get x and y coordinate of the icon marker
+            // radius and offset
             var offsetBorder = 33;
             var radius = (mapCanvas.width() - offsetBorder) / 2;
 
+            // get x and y coordinate of the icon marker
             x = Math.cos(angularDegree) * radius + centerX; 
             y = Math.sin(angularDegree) * radius + centerY; 
 
