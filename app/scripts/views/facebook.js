@@ -436,42 +436,12 @@ define([
             // set map eventlistener
             this.setMapEventlistener();
 
-            // render direction icons
             this.renderDirectionIcons();
 
         },
 
         setClusterEventlistener: function(cluster){
             var that = this;
-
-            // google.maps.event.addListener(cluster, 'clusterclick', function(cluster) {
-            //     var markers = cluster.getMarkers();
-            //     var content = '';
-                
-            //  $.each(markers, function(key, value){
-            //      console.log(value.markerData);
-            //      content += '<b>Anzahl Posts: ' + value.markerData.countedPosts + '</b><br/>';
-            //      content += 'Anzahl Tage: ' + value.markerData.dayPeriod + '<br/>';
-            //      content += 'Uhrzeit Start: ' + value.markerData.hoursStart + '<br/>';
-            //      content += 'Uhrzeit Ende: ' + value.markerData.hoursEnd + '<br/>';
-            //      content += 'Strasse: ' + value.markerData.street + '<br/>';
-            //      content += '----------------------------------------<br/>';
-            //  });
-
-            //  // close info window
-            //  if(that.infowindow){
-            //      that.infowindow.close();
-            //  }
-                
-            //  // info window
-            //  var center = cluster.getCenter();
-            //  var size = cluster.getSize();
-            //  that.infowindow = new google.maps.InfoWindow();
-            //  that.infowindow.setContent(content);
-            //  that.infowindow.setPosition(center);
-            //  that.infowindow.open(that.map); 
-
-            // });
 
             // check if zoom level change --> close all info windows
             google.maps.event.addListener(that.map, 'idle', function() { 
@@ -492,18 +462,26 @@ define([
 
             var that = this;
             var position = new google.maps.LatLng(lat, lng);
+            var icon = ''
             var markerIcon = '';
 
             // work
             if(markerData.hoursStart >= 8 && markerData.hoursEnd <= 19){
-                markerIcon = new google.maps.MarkerImage('images/work.svg', null, null, null, new google.maps.Size(40,40))
                 markerData['type'] = 'work';
+            
             // home
             } else if(markerData.hoursStart > 19){
-                markerIcon = new google.maps.MarkerImage('images/home.svg', null, null, null, new google.maps.Size(40,40))
                 markerData['type'] = 'home';
-
+            
+            // no idea
+            } else {
+                markerData['type'] = 'noIdea';
             }
+            
+            icon = this.typeSwitcher(markerData.type);
+            // set icon
+            markerIcon = new google.maps.MarkerImage(icon['marker'], null, null, null, new google.maps.Size(40,40))
+
 
             var marker = new google.maps.Marker({
                 position: position,
@@ -554,22 +532,14 @@ define([
         displayInfoWindow: function(markerData, marker){
             var that = this;
             var headline = '';
-
-            // work
-            if(markerData.type === 'work'){
-                headline = 'Hier arbeitest du vermutlich';
-            // home
-            } else if(markerData.type === 'home'){
-                headline = 'Hier wohnst du vermutlich';
-
-            }
+            headline = this.typeSwitcher(markerData.type);
 
             // content
             var content = '<div id="marker-infowindow">';
             content += '<div id="marker-infowindow-inner">';
             content += '<div id="close-infowindow">x</div>';
             content += '<div id="triangle"></div>';
-            content += '<h1>' + headline + '</h1>';
+            content += '<h1>' + headline['info'] + '</h1>';
             content += '<h2>' + markerData.street + ', ' + markerData.locationCity + '</h2>';
             content += '<div id="social-icon"></div>';
             content += '<div id="social-content">';
@@ -639,6 +609,15 @@ define([
 
         renderDirectionIcons: function(){
             var that = this;
+
+            // check if map is ready and try it after 1 sec again
+            if(this.map.getBounds() === undefined || this.map.getBounds() === 'undefined'){
+                setTimeout(function(){
+                    that.renderDirectionIcons();
+                }, 1000);
+                return true;
+            }
+
             var centerPosition = that.map.getBounds().getCenter();
             var iconPositions = '';
             var mapCanvas = $('#map-canvas');
@@ -652,20 +631,13 @@ define([
 
                 if(!that.map.getBounds().contains(that.allMarkers[i].getPosition())){
                     
-                    // work
-                    if(that.allMarkers[i].markerData.type === 'work'){
-                        icon = 'icon-direction-work';
-                    // home
-                    } else if(that.allMarkers[i].markerData.type === 'home'){
-                        icon = 'icon-direction-home';
-
-                    }
+                    icon = that.typeSwitcher(that.allMarkers[i].markerData.type);
 
                     // get coordinations (x,y) for the drawing points
                     iconPositions = this.calculateDrawingPoints(that.allMarkers[i].getPosition());
                     
                     // add direction icon marker
-                    mapCanvas.after('<div class="icon-direction-marker ' + icon + '" data-icon-direction-index="' + i + '" style="top: ' + (iconPositions[1] - 12.5 )+ 'px; left: ' + (iconPositions[0] - 12.5 ) + 'px;"></div>');
+                    mapCanvas.after('<div class="icon-direction-marker ' + icon['direction'] + '" data-icon-direction-index="' + i + '" style="top: ' + (iconPositions[1] - 12.5 )+ 'px; left: ' + (iconPositions[0] - 12.5 ) + 'px;"></div>');
 
                 }
 
@@ -694,7 +666,7 @@ define([
             angularDegree = this.convertHeadingToAngle(normalizedHeading);
             
             // get x and y coordinate of the icon marker
-            var offsetBorder = 32;
+            var offsetBorder = 33;
             var radius = (mapCanvas.width() - offsetBorder) / 2;
 
             x = Math.cos(angularDegree) * radius + centerX; 
@@ -719,6 +691,31 @@ define([
 
         convertToRadians: function(angle){
             return angle * Math.PI / 180;
+        },
+
+        typeSwitcher: function(markerType){
+            var data = [];
+
+            // work
+            if(markerType === 'work'){
+                data['info'] = 'Hier arbeitest du vermutlich';
+                data['marker'] = 'images/work.svg';
+                data['direction'] = 'icon-direction-work';
+            // home
+            } else if(markerType === 'home'){
+                data['info'] = 'Hier wohnst du vermutlich';
+                data['marker'] = 'images/home.svg';
+                data['direction'] = 'icon-direction-home';
+
+            // no idea
+            } else {
+                data['info'] = '???';
+                data['marker'] = 'images/help.svg';
+                data['direction'] = 'icon-direction-no';
+            }
+
+            return data;
+
         }
 
 
