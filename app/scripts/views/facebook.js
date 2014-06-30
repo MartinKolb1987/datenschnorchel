@@ -430,31 +430,11 @@ define([
             // init cluster
             var markerCluster = new MarkerClusterer(that.map, markers, {zoomOnClick: true});
 
-            // set cluster eventlistener
-            this.setClusterEventlistener(markerCluster);
-
             // set map eventlistener
             this.setMapEventlistener();
 
+            // render direction icons
             this.renderDirectionIcons();
-
-        },
-
-        setClusterEventlistener: function(cluster){
-            var that = this;
-
-            // check if zoom level change --> close all info windows
-            google.maps.event.addListener(that.map, 'idle', function() { 
-                if(that.changedZoomLevel != this.getZoom()){
-
-                    // close info window
-                    if(that.infowindow){
-                        that.infowindow.close();
-                    }
-
-                    that.changedZoomLevel = this.getZoom();
-                }
-            });
 
         },
 
@@ -597,6 +577,10 @@ define([
             // detect if map zoomed
             google.maps.event.addListener(that.map, 'zoom_changed', function() {
                 if (that.changedZoomLevel != that.map.getZoom()) {
+                    // close info window
+                    if(that.infowindow){
+                        that.infowindow.close();
+                    }
                     that.renderDirectionIcons();
                     that.changedZoomLevel = that.map.getZoom();
                 }
