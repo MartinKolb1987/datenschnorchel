@@ -99,13 +99,20 @@ body{
 	}
 
 	.icon-direction-marker{
-		// display: none;
-		width: 15px;
-		height: 15px;
-		background: blue;
 		position: absolute;
 		z-index: 9999;
-		border-radius: 15px;
+		width: 25px;
+		height: 25px;
+		background-size: cover;
+		cursor: pointer;
+	}
+
+	.icon-direction-work{
+		background-image: url('../images/work.svg');
+	}
+
+	.icon-direction-home{
+		background-image: url('../images/home.svg');
 	}
 
 	#marker-infowindow{

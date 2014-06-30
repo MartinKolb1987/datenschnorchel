@@ -629,16 +629,22 @@ define([
                 that.renderDirectionIcons();
             });
 
+            $('#app-content').on('click', '.icon-direction-marker', function(){
+                var index = $(this).attr('data-icon-direction-index');
+                that.map.setCenter(that.allMarkers[index].getPosition());
+                that.renderDirectionIcons();
+            });
+
         },
 
         renderDirectionIcons: function(){
             var that = this;
-            
             var centerPosition = that.map.getBounds().getCenter();
             var iconPositions = '';
             var mapCanvas = $('#map-canvas');
+            var icon = '';
 
-
+            // remove all direction marker
             $('.icon-direction-marker').remove();
 
             // get all visible markers
@@ -646,9 +652,20 @@ define([
 
                 if(!that.map.getBounds().contains(that.allMarkers[i].getPosition())){
                     
+                    // work
+                    if(that.allMarkers[i].markerData.type === 'work'){
+                        icon = 'icon-direction-work';
+                    // home
+                    } else if(that.allMarkers[i].markerData.type === 'home'){
+                        icon = 'icon-direction-home';
+
+                    }
+
+                    // get coordinations (x,y) for the drawing points
                     iconPositions = this.calculateDrawingPoints(that.allMarkers[i].getPosition());
+                    
                     // add direction icon marker
-                    mapCanvas.after('<div class="icon-direction-marker" data-icon-direction="' + i + '" style="top: ' + iconPositions[1] + 'px; left: ' + iconPositions[0] + 'px;"></div>');
+                    mapCanvas.after('<div class="icon-direction-marker ' + icon + '" data-icon-direction-index="' + i + '" style="top: ' + iconPositions[1] + 'px; left: ' + iconPositions[0] + 'px;"></div>');
 
                 }
 
@@ -671,13 +688,12 @@ define([
             var x = '';
             var y = '';
 
-            // 
+            // calculate heading + normalization + angularDegree
             heading = google.maps.geometry.spherical.computeHeading(centerPosition, markerPosition);
             normalizedHeading = this.normalizeHeading(heading)
             angularDegree = this.convertHeadingToAngle(normalizedHeading);
             
             // get x and y coordinate of the icon marker
-            // to show the direction
             var offsetBorder = -40;
             var radius = (mapCanvas.width() - offsetBorder) / 2;
             x = Math.cos(angularDegree)* radius + centerX; 
