@@ -665,7 +665,7 @@ define([
                     iconPositions = this.calculateDrawingPoints(that.allMarkers[i].getPosition());
                     
                     // add direction icon marker
-                    mapCanvas.after('<div class="icon-direction-marker ' + icon + '" data-icon-direction-index="' + i + '" style="top: ' + iconPositions[1] + 'px; left: ' + iconPositions[0] + 'px;"></div>');
+                    mapCanvas.after('<div class="icon-direction-marker ' + icon + '" data-icon-direction-index="' + i + '" style="top: ' + (iconPositions[1] - 12.5 )+ 'px; left: ' + (iconPositions[0] - 12.5 ) + 'px;"></div>');
 
                 }
 
@@ -694,10 +694,11 @@ define([
             angularDegree = this.convertHeadingToAngle(normalizedHeading);
             
             // get x and y coordinate of the icon marker
-            var offsetBorder = -40;
+            var offsetBorder = 32;
             var radius = (mapCanvas.width() - offsetBorder) / 2;
-            x = Math.cos(angularDegree)* radius + centerX; 
-            y = Math.sin(angularDegree)* radius + centerY; 
+
+            x = Math.cos(angularDegree) * radius + centerX; 
+            y = Math.sin(angularDegree) * radius + centerY; 
 
             return [x, y];
         },
