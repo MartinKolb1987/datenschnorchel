@@ -42,4 +42,41 @@ require([
     $.ajaxSetup({ xhrFields: { withCredentials: true }, dataType: 'json'});
     new Router();
     Backbone.history.start();
+    window.onresize = function(event) {
+		setItems();
+	}
+    setItems();
 });
+
+function setItems() {
+    console.log('set navigation');
+    var windowHeight = $(window).height();
+	var windowWidth = $(window).width();
+    var orientation = 'landscape';
+    var circleSize = windowHeight * 0.475;
+    
+    // check device orientation
+    if (windowWidth < windowHeight) {
+        orientation = 'portrait';
+        circleSize = windowWidth * 0.475;
+    }
+    
+    // buttonSize min-width offset
+    var buttonSize = windowHeight * 0.08;
+    if (buttonSize < 50) {
+        buttonSize = 50;
+    }
+    
+    // calculate icon startpoint: screen center - circleSize
+    var startPoint = (windowWidth / 2) - circleSize - buttonSize;
+    
+    // set all itmes to correct position
+    $('#button-zoom-plus').css('left', (startPoint + (circleSize * 0.08)));
+    $('#button-zoom-minus').css('left', (startPoint + (circleSize * 0.15)));
+    $('#button-fb-login').css('right', (startPoint + (circleSize * 0.45)));
+    $('#button-twitter-login').css('right', (startPoint + (circleSize * 0.28)));
+    $('#button-friends').css('right', (startPoint + (circleSize * 0.15)));
+    $('#button-map').css('right', (startPoint + (circleSize * 0.15)));
+    $('#button-help').css('right', startPoint);
+    
+}

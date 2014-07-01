@@ -13,7 +13,7 @@ $lightGray: #e8e8e8;
 // -----------------
 
 $buttonMargin: 1vh;
-$containerMargin: 10vh;
+$containerMargin: 2.5vh;
 
 // -----------------
 // custom styles
@@ -21,6 +21,11 @@ $containerMargin: 10vh;
 
 body{
 	background-color: $lightGray;
+	
+	#loader {
+		position: absolute;
+		bottom: 0;
+	}
 	
 	.svg-img {
 		background-size: 100%;
@@ -51,39 +56,51 @@ body{
 		min-width: $minSizeL;
 	}
 	
+	$sizeB: 8vh;
+	$minSizeB: 50px;
+	
 	.circle-button {
-		$sizeB: 8vh;
-		$minSizeB: 50px;
 		height: $sizeB;
 		width: $sizeB;
 		min-height: $minSizeB;
 		min-width: $minSizeB;
-	}
-	
-	#button-twitter-login {
-		background-image: url('../images/twitter.svg');
-		display: inline-block;
-		margin-right: $buttonMargin;
+		cursor: pointer;
+		z-index: 999;
+		position: absolute;
 	}
 	
 	#button-fb-login {
 		background-image: url('../images/facebook.svg');
 	}
 	
+	#button-twitter-login {
+		background-image: url('../images/twitter.svg');
+		margin-top: $sizeB;
+	}
+	
 	#button-friends {
 		background-image: url('../images/friends.svg');
-		margin-top: $buttonMargin;
+		margin-top: $sizeB * 2;
 	}
 	
 	#button-map {
 		background-image: url('../images/map.svg');
+		margin-top: $sizeB * 2;
 	}
 	
 	#button-help {
 		background-image: url('../images/help.svg');
-		position: absolute;
-		bottom: $containerMargin;
-		right: 5vw;
+		margin-top: $sizeB * 4;
+	}
+	
+	#button-zoom-plus {
+		background-image: url('../images/zoom-plus.svg');
+		bottom: $sizeB * 3;
+	}
+	
+	#button-zoom-minus {
+		background-image: url('../images/zoom-minus.svg');
+		bottom: $sizeB * 2;
 	}
 
 	#zoom-wrapper{
@@ -101,8 +118,8 @@ body{
 	.icon-direction-marker{
 		position: absolute;
 		z-index: 9999;
-		width: 25px;
-		height: 25px;
+		width: 2vh;
+		height: 2vh;
 		background-size: cover;
 		cursor: pointer;
 		-webkit-transition: all 0.2s linear;
@@ -120,7 +137,19 @@ body{
 	}
 
 	.icon-direction-no{
-		background-image: url('../images/help.svg');
+		background-image: url('../images/wat.svg');
+	}
+	
+	.icon-direction-work-small{
+		background-image: url('../images/work-small.svg');
+	}
+
+	.icon-direction-home-small{
+		background-image: url('../images/home-small.svg');
+	}
+
+	.icon-direction-no-small{
+		background-image: url('../images/wat-small.svg');
 	}
 
 	#marker-infowindow{
@@ -188,111 +217,132 @@ body{
 			}
 		}
 	}
-	
-	@media only screen and (min-width: 1200px) {
-		#navigation-inner {
-			width: 70vw;
-		}
-		
-		#button-help {
-			right: 15vw;
-		}
-	}
 
-	#app-content {
+	$sizeP: 95vw;
+	$sizeL: 95vh;
 		
-		$sizeP: 80vw;
-		$sizeL: 80vh;
+	@media screen and (orientation:portrait) {
 		
-		@media screen and (orientation:portrait) {
-			
-			.app-content-inner {
-				height: $sizeP;
-				width: $sizeP;
-				border-radius: $sizeP;
-			}
-			
-			.friends-entry-container {
-				margin-left: 10vw;
-			}
-			
-			#friends-table-container {
-				height: $sizeP - 10;
-				width: $sizeP - 10;
-				margin-left: 5vw;
-			}
-			
+		#app-content {
+			height: $sizeP;
+			width: $sizeP;
 		}
-		@media screen and (orientation:landscape) {
-			
-			.app-content-inner {
-				height: $sizeL;
-				width: $sizeL;
-				border-radius: $sizeL;
-			}
-			
-			.friends-entry-container {
-				margin-left: 10vh;
-			}
-			
-			#friends-table-container {
-				height: $sizeL - 10;
-				width: $sizeL - 10;
-				margin-left: 5vh;
-			}
+		
+		#map-outer-circle {
+			height: $sizeP - 5;
+			width: $sizeP - 5;
+			border-radius: $sizeP - 5;
 		}
 		
 		.app-content-inner {
-			margin: $containerMargin auto 0 auto;
-			padding: 0;
-			border: 1px solid #b1b1b1;
-			box-shadow: 0 0 2em #bbb;
-		}
-		
-		#friends-table-container {
-			padding-top: $containerMargin;
-			position: absolute;
-		}
-		
-		#friends-table-header {
-			text-align: center;
-			width: 100%;
-			margin-bottom: $containerMargin/2;
+			height: $sizeP;
+			width: $sizeP;
+			border-radius: $sizeP;
 		}
 		
 		.friends-entry-container {
-			width: 50vh;
+			margin-left: 10vw;
 		}
 		
-		.friends-entry-image {
-			float: left;
-			height: 10vh;
-			width: 10vh;
+		#friends-table-container {
+			height: $sizeP - 10;
+			width: $sizeP - 10;
+			margin-left: 5vw;
 		}
 		
-		.friends-image {
-			height: 10vh;
-			width: 10vh;
-			border-radius: 10vh;
-			background-image: url('../images/mockup/friends-image.svg');
-			background-size: contain;
-			background-repeat: no-repeat;
-			background-position: center center;
+	}
+	@media screen and (orientation:landscape) {
+		
+		#app-content {
+			height: $sizeL;
+			width: $sizeL;
 		}
 		
-		.friends-name {
-			display: inline-block;
-			padding-left: $buttonMargin;
+		#map-outer-circle {
+			height: $sizeL - 5;
+			width: $sizeL - 5;
+			border-radius: $sizeL - 5;
 		}
 		
-		.friends-entry-accordion {
-			display: inline-block;
-			width: 35vh;
-			padding-left: $buttonMargin;
+		.app-content-inner {
+			height: $sizeL;
+			width: $sizeL;
+			border-radius: $sizeL;
 		}
 		
-		.friends-pin-details {
-			margin-top: 3vh;
+		.friends-entry-container {
+			margin-left: 10vh;
 		}
+		
+		#friends-table-container {
+			height: $sizeL - 10;
+			width: $sizeL - 10;
+			margin-left: 5vh;
+		}
+	}
+	
+	#app-content {
+		margin: 0 auto;
+	}
+	
+	#map-outer-circle {
+		margin-top: $containerMargin;
+		margin-left: $containerMargin;
+		position: absolute;
+		z-index: 999;
+		box-shadow: 0 0 0 2.5vh rgba(0, 0, 0, 0.15);
+		pointer-events: none;
+	}
+	
+	.app-content-inner {
+		margin: $containerMargin auto 0 auto;
+		padding: 0;
+		border: 1px solid #b1b1b1;
+	}
+	
+	#friends-table-container {
+		padding-top: $containerMargin;
+		position: absolute;
+	}
+	
+	#friends-table-header {
+		text-align: center;
+		width: 100%;
+		margin-bottom: $containerMargin/2;
+	}
+	
+	.friends-entry-container {
+		width: 50vh;
+	}
+	
+	.friends-entry-image {
+		float: left;
+		height: 10vh;
+		width: 10vh;
+	}
+	
+	.friends-image {
+		height: 10vh;
+		width: 10vh;
+		border-radius: 10vh;
+		background-image: url('../images/mockup/friends-image.svg');
+		background-size: contain;
+		background-repeat: no-repeat;
+		background-position: center center;
+	}
+	
+	.friends-name {
+		display: inline-block;
+		padding-left: $buttonMargin;
+	}
+	
+	.friends-entry-accordion {
+		display: inline-block;
+		width: 35vh;
+		padding-left: $buttonMargin;
+	}
+	
+	.friends-pin-details {
+		margin-top: 3vh;
 	}
 }

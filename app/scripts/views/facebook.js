@@ -559,12 +559,12 @@ define([
         setMapEventlistener: function(){
             var that = this;
             var interval = '';
-            $('#app-content').on('click', '#zoom-plus', function(){
+            $('#button-zoom-plus').click(function(){
                 that.map.setZoom(that.map.getZoom() + 1);
                 that.renderDirectionIcons();
             });
 
-            $('#app-content').on('click', '#zoom-minus', function(){
+            $('#button-zoom-minus').click(function(){
                 that.map.setZoom(that.map.getZoom() - 1);
                 that.renderDirectionIcons();
             });
@@ -707,18 +707,18 @@ define([
             if(markerType === 'work'){
                 data['info'] = 'Hier arbeitest du vermutlich';
                 data['marker'] = 'images/work.svg';
-                data['direction'] = 'icon-direction-work';
+                data['direction'] = 'icon-direction-work-small';
             // home
             } else if(markerType === 'home'){
                 data['info'] = 'Hier wohnst du vermutlich';
                 data['marker'] = 'images/home.svg';
-                data['direction'] = 'icon-direction-home';
+                data['direction'] = 'icon-direction-home-small';
 
             // no idea
             } else {
                 data['info'] = '???';
-                data['marker'] = 'images/help.svg';
-                data['direction'] = 'icon-direction-no';
+                data['marker'] = 'images/wat.svg';
+                data['direction'] = 'icon-direction-no-small';
             }
 
             return data;
