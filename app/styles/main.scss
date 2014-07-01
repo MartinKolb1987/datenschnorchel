@@ -13,7 +13,7 @@ $lightGray: #e8e8e8;
 // -----------------
 
 $buttonMargin: 1vh;
-$containerMargin: 2.5vh;
+$containerMargin: 5vh;
 
 // -----------------
 // custom styles
@@ -30,20 +30,6 @@ body{
 	.svg-img {
 		background-size: 100%;
 		background-repeat: no-repeat;
-	}
-	
-	#navigation {
-		position: absolute;
-		width: 100vw;
-		height: 100vh;
-		top: 0;
-		left: 0;
-	}
-	
-	#navigation-inner {
-		padding-top: $containerMargin;
-		width: 90vw;
-		margin: 0 auto;
 	}
 	
 	#logo {
@@ -118,8 +104,8 @@ body{
 	.icon-direction-marker{
 		position: absolute;
 		z-index: 9999;
-		width: 2vh;
-		height: 2vh;
+		width: 4vh;
+		height: 4vh;
 		background-size: cover;
 		cursor: pointer;
 		-webkit-transition: all 0.2s linear;
@@ -229,9 +215,9 @@ body{
 		}
 		
 		#map-outer-circle {
-			height: $sizeP - 5;
-			width: $sizeP - 5;
-			border-radius: $sizeP - 5;
+			height: $sizeP - 10;
+			width: $sizeP - 10;
+			border-radius: $sizeP - 10;
 		}
 		
 		.app-content-inner {
@@ -259,9 +245,9 @@ body{
 		}
 		
 		#map-outer-circle {
-			height: $sizeL - 5;
-			width: $sizeL - 5;
-			border-radius: $sizeL - 5;
+			height: $sizeL - 10;
+			width: $sizeL - 10;
+			border-radius: $sizeL - 10;
 		}
 		
 		.app-content-inner {
@@ -290,12 +276,12 @@ body{
 		margin-left: $containerMargin;
 		position: absolute;
 		z-index: 999;
-		box-shadow: 0 0 0 2.5vh rgba(0, 0, 0, 0.15);
+		box-shadow: 0 0 0 5vh rgba(0, 0, 0, 0.15);
 		pointer-events: none;
 	}
 	
 	.app-content-inner {
-		margin: $containerMargin auto 0 auto;
+		margin: ($containerMargin / 2) auto 0 auto;
 		padding: 0;
 		border: 1px solid #b1b1b1;
 	}
