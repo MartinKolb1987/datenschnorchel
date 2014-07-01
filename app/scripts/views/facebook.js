@@ -674,7 +674,7 @@ define([
             
             // radius and offset
             var blubb = ($(window).height() * 0.05) / 2;
-            console.log(blubb);
+            console.log(blubb); 
             var offsetBorder = blubb;
             var radius = (mapCanvas.width() - offsetBorder) / 2;
 
