@@ -70,7 +70,7 @@ function setItems() {
     // calculate icon startpoint: screen center - circleSize
     var startPoint = (windowWidth / 2) - circleSize - buttonSize;
     
-    // set all itmes to correct position
+    // set all buttons to correct position
     $('#button-zoom-plus').css('left', (startPoint + (circleSize * 0.08)));
     $('#button-zoom-minus').css('left', (startPoint + (circleSize * 0.15)));
     $('#button-fb-login').css('right', (startPoint + (circleSize * 0.45)));
@@ -79,4 +79,10 @@ function setItems() {
     $('#button-map').css('right', (startPoint + (circleSize * 0.15)));
     $('#button-help').css('right', startPoint);
     
+    // center circle in portrait
+    if (orientation == 'portrait') {
+        $('#app-content').css('padding-top', ((windowHeight/2) - circleSize)+'px');
+    } else {
+        $('#app-content').css('padding-top', '2.5vh');
+    }
 }
