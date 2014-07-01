@@ -635,12 +635,13 @@ define([
                     
                     // it´s faster than rendering all direction icons again
                     var iconDirection = $('.icon-direction-marker[data-icon-direction-index="' + i + '"]');
-
+                    var positionCorrection = iconDirection.width() / 2;
+                    console.log(positionCorrection);
                     // add direction icon marker
                     if(iconDirection.length !== 0){
-                        iconDirection.show().attr('style', 'top: ' + (iconPositions[1] - 12.5 )+ 'px; left: ' + (iconPositions[0] - 12.5 ) + 'px;');
+                        iconDirection.show().attr('style', 'top: ' + (iconPositions[1] - positionCorrection )+ 'px; left: ' + (iconPositions[0] - positionCorrection ) + 'px;');
                     } else {
-                        mapCanvas.after('<div class="icon-direction-marker ' + icon['direction'] + '" data-icon-direction-index="' + i + '" style="top: ' + (iconPositions[1] - 12.5 )+ 'px; left: ' + (iconPositions[0] - 12.5 ) + 'px;"></div>');
+                        mapCanvas.after('<div class="icon-direction-marker ' + icon['direction'] + '" data-icon-direction-index="' + i + '" style="top: ' + (iconPositions[1] - positionCorrection )+ 'px; left: ' + (iconPositions[0] - positionCorrection ) + 'px;"></div>');
                     }
 
                 } else {
@@ -672,7 +673,7 @@ define([
             angularDegree = this.convertHeadingToAngle(normalizedHeading);
             
             // radius and offset
-            var offsetBorder = 33;
+            var offsetBorder = 0;
             var radius = (mapCanvas.width() - offsetBorder) / 2;
 
             // get x and y coordinate of the icon marker
