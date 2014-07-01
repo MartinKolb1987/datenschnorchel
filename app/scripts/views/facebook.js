@@ -635,14 +635,18 @@ define([
                     
                     // it´s faster than rendering all direction icons again
                     var iconDirection = $('.icon-direction-marker[data-icon-direction-index="' + i + '"]');
-                    var positionCorrection = iconDirection.width() / 2;
-                    console.log(positionCorrection);
+
                     // add direction icon marker
                     if(iconDirection.length !== 0){
-                        iconDirection.show().attr('style', 'top: ' + (iconPositions[1] - positionCorrection )+ 'px; left: ' + (iconPositions[0] - positionCorrection ) + 'px;');
+                        iconDirection.show();
                     } else {
-                        mapCanvas.after('<div class="icon-direction-marker ' + icon['direction'] + '" data-icon-direction-index="' + i + '" style="top: ' + (iconPositions[1] - positionCorrection )+ 'px; left: ' + (iconPositions[0] - positionCorrection ) + 'px;"></div>');
+                        mapCanvas.after('<div class="icon-direction-marker ' + icon['direction'] + '" data-icon-direction-index="' + i + '"></div>');
                     }
+
+                    // set position
+                    iconDirection = $('.icon-direction-marker[data-icon-direction-index="' + i + '"]');
+                    var positionCorrection = iconDirection.width() / 2;
+                    iconDirection.attr('style', 'top: ' + (iconPositions[1] - positionCorrection )+ 'px; left: ' + (iconPositions[0] - positionCorrection ) + 'px;');
 
                 } else {
                     $('.icon-direction-marker[data-icon-direction-index="' + i + '"]').hide();
@@ -673,8 +677,22 @@ define([
             angularDegree = this.convertHeadingToAngle(normalizedHeading);
             
             // radius and offset
-            var offsetBorder = ($(window).height() * 0.05);
+            var windowHeight = $(window).height();
+            var offsetBorder = $(window).height() * 0.05;
             var radius = (mapCanvas.width() - offsetBorder) / 2;
+            
+            // neutralize rounding difference
+            if(normalizedHeading >= 20 && normalizedHeading <= 35){
+                centerX += windowHeight * 0.005;
+            } else if(normalizedHeading > 35 && normalizedHeading <= 122){
+                centerX += windowHeight * 0.005;
+            }else if(normalizedHeading > 122 && normalizedHeading <= 205){
+                centerX += windowHeight * 0.003;
+                centerY += windowHeight * 0.005;
+            }else if(normalizedHeading > 205 && normalizedHeading <= 215){
+                centerX += windowHeight * 0.003;
+                centerY += windowHeight * 0.005;
+            } 
 
             // get x and y coordinate of the icon marker
             x = Math.cos(angularDegree) * radius + centerX; 
@@ -690,6 +708,7 @@ define([
             } else if (heading < 0){
                 heading += 360;
             }
+            console.log(heading);
             return heading;
         },
 
