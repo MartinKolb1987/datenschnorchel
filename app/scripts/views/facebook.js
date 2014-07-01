@@ -673,9 +673,7 @@ define([
             angularDegree = this.convertHeadingToAngle(normalizedHeading);
             
             // radius and offset
-            var blubb = ($(window).height() * 0.05) / 2;
-            console.log(blubb); 
-            var offsetBorder = blubb;
+            var offsetBorder = ($(window).height() * 0.05);
             var radius = (mapCanvas.width() - offsetBorder) / 2;
 
             // get x and y coordinate of the icon marker
