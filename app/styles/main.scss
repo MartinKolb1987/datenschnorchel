@@ -61,32 +61,26 @@ body{
 	
 	#button-twitter-login {
 		background-image: url('../images/twitter.svg');
-		margin-top: $sizeB;
 	}
 	
 	#button-friends {
 		background-image: url('../images/friends.svg');
-		margin-top: $sizeB * 2;
 	}
 	
 	#button-map {
 		background-image: url('../images/map.svg');
-		margin-top: $sizeB * 2;
 	}
 	
 	#button-help {
 		background-image: url('../images/help.svg');
-		margin-top: $sizeB * 4;
 	}
 	
 	#button-zoom-plus {
 		background-image: url('../images/zoom-plus.svg');
-		bottom: $sizeB * 3;
 	}
 	
 	#button-zoom-minus {
 		background-image: url('../images/zoom-minus.svg');
-		bottom: $sizeB * 2;
 	}
 
 	#zoom-wrapper{
