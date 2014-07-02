@@ -665,20 +665,19 @@ define([
             var mapCanvas = $('#map-canvas');
             var offset = mapCanvas.offset();
             var width = mapCanvas.width();
-            var height = mapCanvas.height();
             var centerX = offset.left + width / 2;
-            var centerY = offset.top + height / 2;
+            var centerY = offset.top + width / 2;
             var x = '';
             var y = '';
 
             // calculate heading + normalization + angularDegree
             heading = google.maps.geometry.spherical.computeHeading(centerPosition, markerPosition);
-            normalizedHeading = this.normalizeHeading(heading)
+            normalizedHeading = this.normalizeHeading(heading);
             angularDegree = this.convertHeadingToAngle(normalizedHeading);
-            
+
             // radius and offset
             var windowHeight = $(window).height();
-            var offsetBorder = $(window).height() * 0.05;
+            var offsetBorder = windowHeight * 0.05;
             var radius = (mapCanvas.width() - offsetBorder) / 2;
             
             // neutralize rounding difference
@@ -708,7 +707,6 @@ define([
             } else if (heading < 0){
                 heading += 360;
             }
-            console.log(heading);
             return heading;
         },
 
