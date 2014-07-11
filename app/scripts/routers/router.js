@@ -11,6 +11,7 @@ define([
 
     var Router = Backbone.Router.extend({
 
+        initLoad: false,
         aboutView: new AboutView(),
         facebookView: new FacebookView(),
 		friendsView: new FriendsView(),
@@ -28,10 +29,16 @@ define([
 
         facebook: function(){
             this.facebookView.overview();
+            this.initLoad = true;
         },
 
 		friends: function(){
-            this.friendsView.overview();
+            if(this.initLoad){
+                this.friendsView.facebookData = this.facebookView.facebookData;
+                this.friendsView.overview();
+            } else {
+                Backbone.history.navigate('facebook', true);
+            }
         },
 
         defaultAction: function(){

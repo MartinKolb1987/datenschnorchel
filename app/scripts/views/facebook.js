@@ -6,20 +6,17 @@ define([
     'backbone',
     'facebook',
     'markercluster',
-    '../collections/fb_feeds',
-    '../models/fb_feed',
     'text!../templates/map/google_map.html',
     'text!../templates/facebook/facebook_item.html',
     'text!../api/db_sarah_20140514_ALLES.json'
-], function ($, _, Backbone, FB, Markercluster, Collection, Model, MapTemplate, FacebookItemTemplate, MockData) {
+], function ($, _, Backbone, FB, Markercluster, MapTemplate, FacebookItemTemplate, MockData) {
     'use strict';
 
     var AppView = Backbone.View.extend({
         // default
         el: 'body',
         appContent: $('#app-content'),
-        collection: {},
-        
+
         // facebook
         facebookData: [],
         facebookDataParsed: [],
@@ -58,16 +55,25 @@ define([
             // render map wrapper
             this.render(that.appContent, _.template(MapTemplate));
 
-            // init map
-            this.initMap();
+            // show loader
+            $(this.el).find('#loader-wrapper').show();
 
-            // init facebook & show login if needed
-            this.initFacebook();
-            this.loginFacebook();
-            // this.facebookData = '';
-            // this.facebookDataSorted = '';
-            // this.facebookData = $.parseJSON(MockData);
-            // this.parseData();
+            // check if already already exists
+            if(this.facebookData.length > 0){
+                this.initMap();
+                this.setMarker();
+            } else {
+                // init facebook & show login if needed
+                this.initFacebook();
+                this.loginFacebook();
+
+                // use local data
+                // this.facebookData = '';
+                // this.facebookDataSorted = '';
+                // this.facebookData = $.parseJSON(MockData);
+                // this.parseData();
+            }
+
 
         },
 
@@ -148,8 +154,6 @@ define([
         // get and parse data 
         // -------------------------------
         fetchData: function() {
-            this.collection = '';
-            this.collection = new Collection();
             var that = this;
             that.facebookData = [];
             that.facebookDataParsed = [];
@@ -168,13 +172,11 @@ define([
             });
                   
             if(typeof(response.paging) !== 'undefined' ) {
-                $(this.el).find('#loader').append(' -');
                 FB.api(response.paging.next, function(response){ 
                     that.fetchBatch(response); 
                 });
             } else {
                 console.log('Counted Posts: ' + that.facebookData.length);
-                $(this.el).find('#loader').text( ' hat ' + that.facebookData.length + ' Posts abgeschnorchelt!');
                 that.parseData();
             }
 
@@ -212,7 +214,6 @@ define([
                         data.created = value.created_time;
                         data.createdHour = new Date(value.created_time).getHours();
                         that.facebookDataParsed.push(data);
-                        console.log();
                     }
                 }
             });
@@ -248,7 +249,13 @@ define([
                 });
 
                 that.facebookDataSorted = outerArr;
+                
+                // init map & set marker
+                that.initMap();
                 that.setMarker();
+                
+                // hide loader
+                $(this.el).find('#loader-wrapper').hide();
             
             });
 
@@ -386,11 +393,11 @@ define([
                 
                 // switch if start and end point not in the right order
                 // e.g. start point 15 and end point 10 --> switch it
-                if(hoursStart > hoursEnd){
-                    hoursSwitch = hoursStart;
-                    hoursStart = hoursEnd;
-                    hoursEnd = hoursSwitch;
-                }
+                // if(hoursStart > hoursEnd){
+                //     hoursSwitch = hoursStart;
+                //     hoursStart = hoursEnd;
+                //     hoursEnd = hoursSwitch;
+                // }
 
                 // prepare data for markerData
                 markerData = {};
