@@ -36,6 +36,10 @@ define([
 		overview: function(){
 			var that = this;
 			this.render(that.appContent, _.template(AboutTemplate, {name: 'creepy crawler'}));
+			
+			// hide loader & map navigation
+			$(this.el).find('#loader-wrapper').hide();
+			$(this.el).find('#map-navigation').hide();
 		},
 
 

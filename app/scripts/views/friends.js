@@ -44,14 +44,12 @@ define([
 
 			// render map wrapper
 			this.render(that.appContent, _.template(FriendsTemplate));
-			// hide loader
+			// hide loader & map navigation
 			$(this.el).find('#loader-wrapper').hide();
-			// init facebook & show login if needed
-			// this.initFacebook();
-			// this.loginFacebook();
+			$(this.el).find('#map-navigation').hide();
+			
+			// facebook data
 			console.log(this.facebookData);
-			/*this.facebookData = $.parseJSON(MockData);
-			this.parseData();*/
 
 		}
 

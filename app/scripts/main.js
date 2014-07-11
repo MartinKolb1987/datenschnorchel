@@ -102,9 +102,9 @@ function setItems() {
         degZoomPlus = 200;
         degZoomMinus = 212;
         degFbLogin = 55;
-        degTwitterLogin = 43;
-        degFriendsMap = 31;
-        degHelp = 12;
+        degFriendsMap = 43;
+        // degTwitterLogin = 43;
+        degHelp = 22;
     }
     
     // set all buttons to correct position
@@ -120,8 +120,8 @@ function setItems() {
     $('#button-fb-login').css('top', (startTop + ((Math.sin(degFbLogin * Math.PI / 180) * circleRadius) * -1)));
     $('#button-fb-login').css('left', (startRight - ((Math.cos(degFbLogin * Math.PI / 180) * circleRadius) * -1)));
     
-    $('#button-twitter-login').css('top', (startTop + ((Math.sin(degTwitterLogin * Math.PI / 180) * circleRadius) * -1)));
-    $('#button-twitter-login').css('left', (startRight - ((Math.cos(degTwitterLogin * Math.PI / 180) * circleRadius) * -1)));
+    // $('#button-twitter-login').css('top', (startTop + ((Math.sin(degTwitterLogin * Math.PI / 180) * circleRadius) * -1)));
+    // $('#button-twitter-login').css('left', (startRight - ((Math.cos(degTwitterLogin * Math.PI / 180) * circleRadius) * -1)));
 
     $('#button-friends').css('top', (startTop + ((Math.sin(degFriendsMap * Math.PI / 180) * circleRadius) * -1)));
     $('#button-friends').css('left', (startRight - ((Math.cos(degFriendsMap * Math.PI / 180) * circleRadius) * -1)));

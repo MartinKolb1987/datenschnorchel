@@ -108,6 +108,7 @@ body{
 	}
 	
 	#button-twitter-login {
+		display: none;
 		background-image: url('../images/twitter.svg');
 	}
 	
@@ -123,23 +124,14 @@ body{
 		background-image: url('../images/help.svg');
 	}
 	
-	#button-zoom-plus {
-		background-image: url('../images/zoom-plus.svg');
-	}
-	
-	#button-zoom-minus {
-		background-image: url('../images/zoom-minus.svg');
-	}
-
-	#zoom-wrapper{
-		position: absolute;
-		z-index: 9999;
-		bottom: 10px;
-		left: 50vw;
-		margin-left: -30px;
-		#zoom-plus, #zoom-minus{
-			width: 30px;
-			height: 30px;
+	#map-navigation{
+		display: none;
+		#button-zoom-plus {
+			background-image: url('../images/zoom-plus.svg');
+		}
+		
+		#button-zoom-minus {
+			background-image: url('../images/zoom-minus.svg');
 		}
 	}
 
@@ -213,10 +205,10 @@ body{
 				top: 0;
 				width: 15px;
 				height: 15px;
-				background: gray;
-				color: white;
 				text-align: center;
 				cursor: pointer;
+				font-weight: bold;
+				text-transform: uppercase;
 			}
 
 			h1{

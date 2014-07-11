@@ -56,12 +56,13 @@ define([
             this.render(that.appContent, _.template(MapTemplate));
 
             // show loader
-            $(this.el).find('#loader-wrapper').show();
+            $(that.el).find('#loader-wrapper').show();
 
             // check if already already exists
             if(this.facebookData.length > 0){
                 this.initMap();
                 this.setMarker();
+                $(that.el).find('#map-navigation').show();
             } else {
                 // init facebook & show login if needed
                 this.initFacebook();
@@ -255,7 +256,8 @@ define([
                 that.setMarker();
                 
                 // hide loader
-                $(this.el).find('#loader-wrapper').hide();
+                $(that.el).find('#loader-wrapper').hide();
+                $(that.el).find('#map-navigation').show();
             
             });
 
