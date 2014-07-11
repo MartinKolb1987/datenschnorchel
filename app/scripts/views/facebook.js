@@ -58,7 +58,7 @@ define([
             // show loader
             $(that.el).find('#loader-wrapper').show();
 
-            // check if already already exists
+            // check if data already exists
             if(this.facebookData.length > 0){
                 this.initMap();
                 this.setMarker();
