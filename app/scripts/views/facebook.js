@@ -740,6 +740,11 @@ define([
                 data['info'] = 'Hier wohnst du vermutlich';
                 data['marker'] = 'images/home.svg';
                 data['direction'] = 'icon-direction-home-small';
+			// leisure time
+            } else if(markerType === 'leisure'){
+                data['info'] = 'Hier gehst du vermutlich Freizeitaktivitäten nach';
+                data['marker'] = 'images/freizeit.svg';
+                data['direction'] = 'icon-direction-leisure-small';
 
             // no idea
             } else {
