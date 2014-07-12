@@ -63,6 +63,12 @@ function setItems() {
         circleRadius = windowWidth * 0.475;
     }
     console.log('screen orientation: '+orientation);
+
+	// logo min-width offset
+    var logoSize = windowHeight * 0.16;
+    if (logoSize < 100) {
+        logoSize = 100;
+    }
     
     // buttonSize min-width offset
     var buttonSize = windowHeight * 0.08;
@@ -71,10 +77,13 @@ function setItems() {
     }
     
     // center circle in portrait and set button degrees
+	var startLeftLogo;
+	var startTopLogo;
     var startLeft;
     var startRight;
     var startTop;
     var startBottom;
+	var degLogo;
     var degZoomPlus;
     var degZoomMinus;
     var degFbLogin;
@@ -83,22 +92,28 @@ function setItems() {
     var degHelp;
     if (orientation == 'portrait') {
         $('#app-content').css('padding-top', ((windowHeight/2) - circleRadius)+'px');
+		startLeftLogo = ((windowWidth / 2) - logoSize);
+		startTopLogo = (windowHeight/2) - logoSize;
         startLeft = ((windowWidth / 2) - buttonSize);
         startRight = (windowWidth / 2);
         startTop = (windowHeight/2) - buttonSize;
         startBottom = (windowHeight/2);
+		degLogo = 115;
         degZoomPlus = 225;
         degZoomMinus = 240;
         degFbLogin = 90;
-        degTwitterLogin = 75;
+        // degTwitterLogin = 75;
         degFriendsMap = 60;
         degHelp = 40;
     } else {
         $('#app-content').css('padding-top', '2.5vh');
+		startLeftLogo = ((windowWidth / 2) - logoSize);
+		startTopLogo = (windowHeight * 0.025) + circleRadius - logoSize;
         startLeft = ((windowWidth / 2) - buttonSize);
         startRight = (windowWidth / 2);
         startTop = (windowHeight * 0.025) + circleRadius - buttonSize;
         startBottom = (windowHeight * 0.025) + circleRadius;
+		degLogo = 140;
         degZoomPlus = 200;
         degZoomMinus = 212;
         degFbLogin = 55;
@@ -110,6 +125,9 @@ function setItems() {
     // set all buttons to correct position
     // y = sin(a) * r
     // x = cos(a) * r
+
+    $('#logo').css('top', (startTopLogo + ((Math.sin(degLogo * Math.PI / 180) * circleRadius) * -1)));
+    $('#logo').css('left', (startLeftLogo - ((Math.cos(degLogo * Math.PI / 180) * circleRadius) * -1)));
 
     $('#button-zoom-plus').css('top', (startBottom + ((Math.sin(degZoomPlus * Math.PI / 180) * circleRadius) * -1)));
     $('#button-zoom-plus').css('left', (startLeft - ((Math.cos(degZoomPlus * Math.PI / 180) * circleRadius) * -1)));

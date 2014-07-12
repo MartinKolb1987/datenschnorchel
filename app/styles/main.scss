@@ -88,6 +88,9 @@ body{
 		width: $sizeL;
 		min-height: $minSizeL;
 		min-width: $minSizeL;
+		cursor: pointer;
+		z-index: 999;
+		position: absolute;
 	}
 	
 	$sizeB: 8vh;
