@@ -180,7 +180,7 @@ body{
 	}
 
 	#marker-infowindow{
-		height: 100px;
+		height: 110px;
 		padding: 10px;
 		position: relative;
 		background: #000;
@@ -194,7 +194,7 @@ body{
 			padding: 10px;
 			font-size: 11px;
 			color: #373737;
-			height: 105px;
+			height: 115px;
 			
 			#triangle{
 				border-left: 15px solid transparent;
@@ -256,7 +256,7 @@ body{
 			height: $sizeP;
 			width: $sizeP;
 		}
-		
+
 		#map-outer-circle {
 			height: $sizeP - 10;
 			width: $sizeP - 10;
@@ -264,6 +264,8 @@ body{
 			box-shadow: 0 0 0 $marginP rgba(0, 0, 0, 0.15);
 			margin-top: $marginP;
 			margin-left: $marginP;
+			line-height: $sizeP - 10;
+			text-align: center;
 		}
 		
 		.app-content-inner {
@@ -297,6 +299,8 @@ body{
 			box-shadow: 0 0 0 $marginL rgba(0, 0, 0, 0.15);
 			margin-top: $marginL;
 			margin-left: $marginL;
+			line-height: $sizeL - 10;
+			text-align: center;
 		}
 		
 		.app-content-inner {

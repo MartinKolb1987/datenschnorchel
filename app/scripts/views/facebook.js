@@ -21,7 +21,7 @@ define([
         facebookData: [],
         facebookDataParsed: [],
         facebookDataSorted: [],
-        minimumNumberOfSameEntries: 2, // -1 = never mind
+        minimumNumberOfSameEntries: 1, // -1 = never mind
         
         // gmap
         map: '',
@@ -62,7 +62,6 @@ define([
             if(this.facebookData.length > 0){
                 this.initMap();
                 this.setMarker();
-                $(that.el).find('#map-navigation').show();
             } else {
                 // init facebook & show login if needed
                 this.initFacebook();
@@ -257,8 +256,7 @@ define([
                 
                 // hide loader
                 $(that.el).find('#loader-wrapper').hide();
-                $(that.el).find('#map-navigation').show();
-            
+
             });
 
 
@@ -445,6 +443,15 @@ define([
             // render direction icons
             this.renderDirectionIcons();
 
+            if(markers.length < 1) {
+                console.log('dkkd');
+                $(this.el).find('#map-outer-circle').html('<b>Glückwunsch!</b> Keine Daten vorhanden.');
+                $(this.el).find('#loader-wrapper').hide();
+                $(this.el).find('#map-canvas').remove();
+            } else {
+                $(this.el).find('#map-navigation').show();
+            }
+
         },
 
         createMarker: function(lat, lng, markerData){
@@ -455,11 +462,15 @@ define([
             var markerIcon = '';
 
             // work
-            if(markerData.hoursStart >= 8 && markerData.hoursEnd <= 19){
+            if(markerData.hoursStart >= 6 && markerData.hoursEnd <= 19){
                 markerData['type'] = 'work';
             
+            // leisure time
+            } else if(markerData.hoursStart > 19 && markerData.hoursEnd <= 22){
+                markerData['type'] = 'leisure';
+            
             // home
-            } else if(markerData.hoursStart > 19){
+            } else if(markerData.hoursStart > 22 && markerData.hoursEnd < 6){
                 markerData['type'] = 'home';
             
             // no idea
