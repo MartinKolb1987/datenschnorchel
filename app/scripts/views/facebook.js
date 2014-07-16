@@ -484,7 +484,7 @@ define([
             
             icon = this.typeSwitcher(markerData.type);
             // set icon
-            markerIcon = new google.maps.MarkerImage(icon['marker'], null, null, null, new google.maps.Size(40,40))
+            markerIcon = new google.maps.MarkerImage(icon['marker'], null, null, null, new google.maps.Size(44,44))
 
 
             var marker = new google.maps.Marker({
@@ -502,12 +502,12 @@ define([
             this.allMarkers.push(marker);
 
             // add eventlistener to every single marker
-            this.setMarkerEventlistener(marker);
+            this.setMarkerEventlistener(marker, markerData);
 
             return marker;
         },
 
-        setMarkerEventlistener: function(marker){
+        setMarkerEventlistener: function(marker, markerData){
             var that = this;
 
             // open infowindow
@@ -517,9 +517,18 @@ define([
 
             // close infowindow
             $('#app-content').on('click', '#close-infowindow', function(){
-                 if(that.infowindow){
-                     that.infowindow.close();
-                 }
+                console.log(marker);
+                // change icon to active icon
+                var icon = that.typeSwitcher(markerData.type);
+                var newIcon = {
+                    size: new google.maps.Size(44,44),
+                    url: icon['marker']
+                };
+                marker.setIcon(newIcon);
+
+                if(that.infowindow){
+                    that.infowindow.close();
+                }
             });
 
             // change icons on mouseover & mouseout
@@ -537,6 +546,15 @@ define([
             var that = this;
             var headline = '';
             headline = this.typeSwitcher(markerData.type);
+
+
+            // change icon to active icon
+            var icon = this.typeSwitcher(markerData.type);
+            var newIcon = {
+                size: new google.maps.Size(44,44),
+                url: icon['markerActive']
+            };
+            marker.setIcon(newIcon);
 
             // content
             var content = '<div id="marker-infowindow">';
@@ -749,16 +767,19 @@ define([
             if(markerType === 'work'){
                 data['info'] = 'Hier arbeitest du vermutlich';
                 data['marker'] = 'images/work.svg';
+                data['markerActive'] = 'images/work_active.svg';
                 data['direction'] = 'icon-direction-work-small';
             // home
             } else if(markerType === 'home'){
                 data['info'] = 'Hier wohnst du vermutlich';
                 data['marker'] = 'images/home.svg';
+                data['markerActive'] = 'images/home_active.svg';
                 data['direction'] = 'icon-direction-home-small';
 			// leisure time
             } else if(markerType === 'leisure'){
                 data['info'] = 'Hier gehst du vermutlich Freizeitaktivitäten nach';
                 data['marker'] = 'images/freizeit.svg';
+                data['markerActive'] = 'images/freizeit_active.svg';
                 data['direction'] = 'icon-direction-leisure-small';
 
             // no idea
