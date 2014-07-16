@@ -786,6 +786,7 @@ define([
             } else {
                 data['info'] = '???';
                 data['marker'] = 'images/wat.svg';
+                data['markerActive'] = 'images/wat_active.svg';
                 data['direction'] = 'icon-direction-no-small';
             }
 
