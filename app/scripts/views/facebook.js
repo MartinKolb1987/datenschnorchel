@@ -49,7 +49,7 @@ define([
         // -------------------------------
         // actions
         // -------------------------------
-        overview: function(){
+        overview: function(id){
             var that = this;
 
             // render map wrapper
@@ -63,15 +63,19 @@ define([
                 this.initMap();
                 this.setMarker();
             } else {
-                // init facebook & show login if needed
-                this.initFacebook();
-                this.loginFacebook();
 
-                // use local data
-                // this.facebookData = '';
-                // this.facebookDataSorted = '';
-                // this.facebookData = $.parseJSON(MockData);
-                // this.parseData();
+                if(id === 'online'){
+                    // init facebook & show login if needed
+                    this.initFacebook();
+                    this.loginFacebook();
+                } else {
+                    // use local data
+                    this.facebookData = '';
+                    this.facebookDataSorted = '';
+                    this.facebookData = $.parseJSON(MockData);
+                    this.parseData();
+                }
+
             }
 
 

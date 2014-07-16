@@ -18,7 +18,7 @@ define([
 
         routes: {
             '' : 'about',
-            'facebook' : 'facebook',
+            'facebook/:id' : 'facebook',
 			'friends' : 'friends',
 			'*actions': 'defaultAction'
         },
@@ -27,8 +27,8 @@ define([
         	this.aboutView.overview();
         },
 
-        facebook: function(){
-            this.facebookView.overview();
+        facebook: function(id){
+            this.facebookView.overview(id);
             this.initLoad = true;
         },
 

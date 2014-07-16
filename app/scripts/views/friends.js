@@ -49,7 +49,7 @@ define([
 			$(this.el).find('#map-navigation').hide();
 			
 			// facebook data
-			console.log(this.facebookData);
+			// console.log(this.facebookData);
 
 		}
 
