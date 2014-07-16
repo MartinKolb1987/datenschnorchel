@@ -517,7 +517,7 @@ define([
 
             // close infowindow
             $('#app-content').on('click', '#close-infowindow', function(){
-                console.log(marker);
+
                 // change icon to active icon
                 var icon = that.typeSwitcher(markerData.type);
                 var newIcon = {
