@@ -8,7 +8,7 @@ define([
     'markercluster',
     'text!../templates/map/google_map.html',
     'text!../templates/facebook/facebook_item.html',
-    'text!../api/db_sarah_20140514_ALLES.json'
+    'text!../api/db.json'
 ], function ($, _, Backbone, FB, Markercluster, MapTemplate, FacebookItemTemplate, MockData) {
     'use strict';
 

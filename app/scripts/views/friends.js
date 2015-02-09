@@ -9,7 +9,7 @@ define([
     '../models/fb_feed',
     'text!../templates/friends/friends.html',
     'text!../templates/friends/friends_item.html',
-    'text!../api/db_sarah_20140514_ALLES.json'
+    'text!../api/db.json'
 ], function ($, _, Backbone, FB, Collection, Model, FriendsTemplate, FriendsItemTemplate, MockData) {
     'use strict';
 
