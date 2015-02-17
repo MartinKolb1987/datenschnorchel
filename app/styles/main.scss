@@ -150,33 +150,21 @@ body{
 		-o-transition: all 0.2s linear;
 		transition: all 0.2s linear;
 	}
-
-	.icon-direction-work{
-		background-image: url('../images/work.svg');
-	}
-
-	.icon-direction-home{
-		background-image: url('../images/home.svg');
-	}
-
-	.icon-direction-no{
-		background-image: url('../images/wat.svg');
-	}
 	
 	.icon-direction-work-small{
-		background-image: url('../images/work-small.svg');
+		background-image: url('../images/work_small.svg');
 	}
 
 	.icon-direction-home-small{
-		background-image: url('../images/home-small.svg');
+		background-image: url('../images/home_small.svg');
 	}
 
 	.icon-direction-leisure-small{
-		background-image: url('../images/freizeit-small.svg');
+		background-image: url('../images/leisure_small.svg');
 	}
 
 	.icon-direction-no-small{
-		background-image: url('../images/wat-small.svg');
+		background-image: url('../images/wat_small.svg');
 	}
 
 	#marker-infowindow{

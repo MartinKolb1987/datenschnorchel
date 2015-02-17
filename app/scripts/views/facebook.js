@@ -766,27 +766,26 @@ define([
             // work
             if(markerType === 'work'){
                 data['info'] = 'Hier arbeitest du vermutlich';
-                data['marker'] = 'images/work.svg';
-                data['markerActive'] = 'images/work_active.svg';
+                data['marker'] = 'images/work.png';
+                data['markerActive'] = 'images/work_active.png';
                 data['direction'] = 'icon-direction-work-small';
             // home
             } else if(markerType === 'home'){
                 data['info'] = 'Hier wohnst du vermutlich';
-                data['marker'] = 'images/home.svg';
-                data['markerActive'] = 'images/home_active.svg';
+                data['marker'] = 'images/home.png';
+                data['markerActive'] = 'images/home_active.png';
                 data['direction'] = 'icon-direction-home-small';
 			// leisure time
             } else if(markerType === 'leisure'){
                 data['info'] = 'Hier gehst du vermutlich Freizeitaktivitäten nach';
-                data['marker'] = 'images/freizeit.svg';
-                data['markerActive'] = 'images/freizeit_active.svg';
+                data['marker'] = 'images/leisure.png';
+                data['markerActive'] = 'images/leisure_active.png';
                 data['direction'] = 'icon-direction-leisure-small';
-
             // no idea
             } else {
                 data['info'] = '???';
-                data['marker'] = 'images/wat.svg';
-                data['markerActive'] = 'images/wat_active.svg';
+                data['marker'] = 'images/wat.png';
+                data['markerActive'] = 'images/wat_active.png';
                 data['direction'] = 'icon-direction-no-small';
             }
 
